@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Gold Room — Oscar Mining SO · Chapter Two</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#FAF7F1; --stone:#F1EBE0; --ink:#221C14; --body:#5A5343; --mute:#8A8272;
+  --org:#E9711C; --org2:#C75C10; --hair:#E6DECF; --dark:#241E15; --amber:#FFC989;
+  --disp:"Archivo",Segoe UI,Arial,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{overflow-x:clip}
+body{background:var(--bg);color:var(--ink);font-family:var(--disp);font-weight:420;font-size:17px;line-height:1.72;-webkit-font-smoothing:antialiased}
+::selection{background:var(--org);color:#fff}
+a:focus-visible,button:focus-visible{outline:2px solid var(--org);outline-offset:3px}
+video{display:block;width:100%;height:100%;object-fit:cover}
+h1{font-weight:740;font-size:clamp(36px,6vw,64px);line-height:1.03;letter-spacing:-.014em}
+h2{font-weight:700;font-size:clamp(24px,3.4vw,38px);line-height:1.12;letter-spacing:-.01em}
+.kick{font-family:var(--mono);font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--org2);margin-bottom:14px}
+.lede{max-width:62ch;color:var(--body);font-size:clamp(16px,1.5vw,18px)}
+.note{font-family:var(--mono);font-size:11.5px;color:var(--mute);letter-spacing:.02em}
+.btn{display:inline-flex;align-items:center;gap:10px;padding:14px 24px;border-radius:4px;font-weight:560;font-size:15px;
+  text-decoration:none;cursor:pointer;border:1.5px solid transparent;transition:all .2s}
+.btn.solid{background:var(--org);color:#fff}
+.btn.solid:hover{background:var(--org2)}
+.btn.ghost{border-color:var(--ink);color:var(--ink)}
+.btn.ghost:hover{background:var(--ink);color:var(--bg)}
+.reveal{opacity:0;transform:translateY(20px);transition:opacity .7s,transform .7s}
+.reveal.in{opacity:1;transform:none}
+@media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}}
+section{padding:clamp(60px,8vw,100px) clamp(20px,5vw,72px)}
+.wrap{max-width:1080px;margin:0 auto}
+
+#micro{background:var(--dark);color:#D8D0BE;font-family:var(--mono);font-size:11px;letter-spacing:.08em;
+  padding:7px clamp(20px,5vw,72px);display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap}
+#micro b{color:#F3B24A;font-weight:500}
+nav{position:sticky;top:0;z-index:50;background:rgba(250,247,241,.92);backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--hair);display:flex;align-items:center;justify-content:space-between;
+  gap:16px;padding:12px clamp(20px,5vw,72px)}
+.brand{display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--ink)}
+.brand svg{height:32px;width:auto}
+.bn{font-weight:790;font-size:15px;letter-spacing:.11em}
+.bs{display:block;font-family:var(--mono);font-size:9px;letter-spacing:.13em;color:var(--org2);font-style:italic;margin-top:2px}
+.nl{display:flex;gap:clamp(14px,2.2vw,26px);font-size:14px;align-items:center}
+.nl a{color:var(--ink);text-decoration:none}
+.nl a:hover{color:var(--org2)}
+.nl a.cur{color:var(--org2);font-weight:600}
+@media(max-width:700px){.nl a.hz{display:none}}
+
+#intro{padding-bottom:clamp(26px,4vw,44px)}
+
+/* ===== the film ===== */
+#film{padding:0}
+.seq{position:relative;height:880vh}
+.stage{position:sticky;top:0;height:100svh;overflow:hidden;background:var(--dark)}
+.stage video{position:absolute;inset:0;opacity:0}
+.stage video.base{opacity:1}
+.shade{position:absolute;inset:0;z-index:2;pointer-events:none;
+  background:linear-gradient(180deg,rgba(20,15,8,.2),rgba(20,15,8,.05) 38%,rgba(20,15,8,.58) 100%)}
+.caption{position:absolute;left:clamp(20px,5vw,64px);bottom:clamp(24px,5vh,50px);z-index:4;color:#fff;max-width:520px}
+.caption .shot{font-family:var(--mono);font-size:11.5px;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.75);margin-bottom:6px}
+.caption h3{font-weight:720;font-size:clamp(21px,3vw,32px);line-height:1.12;letter-spacing:-.01em}
+.caption p{margin-top:6px;font-size:14px;color:rgba(255,255,255,.85);max-width:44ch}
+.dots{position:absolute;left:50%;bottom:16px;transform:translateX(-50%);z-index:4;display:flex;gap:10px}
+.dots i{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.35);transition:all .3s}
+.dots i.on{background:var(--org);transform:scale(1.5)}
+.sample{position:absolute;right:clamp(14px,3vw,30px);bottom:14px;z-index:4;font-family:var(--mono);
+  font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.45)}
+
+/* overlays */
+.ov{position:absolute;z-index:4;opacity:0;transition:opacity .45s;pointer-events:none;color:#fff}
+.ov.on{opacity:1}
+.ovtag{font-family:var(--mono);font-size:10.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--amber);margin-bottom:10px}
+.card{background:rgba(20,15,8,.55);border:1px solid rgba(255,255,255,.18);backdrop-filter:blur(4px);border-radius:6px;padding:16px 18px}
+.line{font-family:var(--mono);font-size:12px;letter-spacing:.06em;color:rgba(255,255,255,.9);padding:5px 0;
+  border-bottom:1px dashed rgba(255,255,255,.14);opacity:0;transform:translateY(8px);transition:opacity .4s,transform .4s}
+.line:last-child{border-bottom:0}
+.line.in{opacity:1;transform:none}
+/* g1 registry (right) */
+#ov0{right:clamp(18px,4vw,54px);top:50%;transform:translateY(-50%);max-width:300px}
+/* g2 purity (right) */
+#ov1{right:clamp(18px,4vw,54px);top:50%;transform:translateY(-50%);max-width:320px;text-align:right}
+.dial{position:relative;display:inline-block}
+.dial svg{display:block}
+.dial .pct{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+  font-family:var(--mono);font-size:20px;color:var(--amber)}
+.bars{margin-top:14px;display:flex;flex-direction:column;gap:8px;min-width:230px}
+.brow{display:grid;grid-template-columns:52px 1fr 48px;gap:8px;align-items:center;font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;color:rgba(255,255,255,.85)}
+.track{height:5px;background:rgba(255,255,255,.16);border-radius:3px;overflow:hidden}
+.fill{display:block;height:100%;width:0%;border-radius:3px}
+#fAu{background:var(--org)} #fAg{background:#C9CDD4} #fOt{background:#8A8272}
+/* g3 weight (upper right) */
+#ov2{right:clamp(18px,4vw,54px);top:clamp(80px,14vh,140px);text-align:right}
+#kg{font-family:var(--mono);font-size:clamp(30px,4.4vw,48px);color:#fff;letter-spacing:.04em}
+#oz{font-family:var(--mono);font-size:14px;color:rgba(255,255,255,.8);margin-top:4px}
+#lock{font-family:var(--mono);font-size:11px;letter-spacing:.2em;color:var(--amber);margin-top:10px;opacity:0;transition:opacity .4s}
+#ov2.locked #kg{color:var(--amber)}
+#ov2.locked #lock{opacity:1}
+/* g4 identity (upper left) */
+#ov3{left:clamp(18px,4vw,54px);top:clamp(80px,14vh,140px);max-width:300px}
+#serial{font-family:var(--mono);font-size:clamp(20px,3vw,30px);letter-spacing:.1em;color:var(--amber);min-height:1.2em}
+.ticks{margin-top:14px;display:flex;flex-direction:column;gap:8px}
+.tick{font-family:var(--mono);font-size:12px;letter-spacing:.14em;color:rgba(255,255,255,.9);
+  opacity:0;transform:translateX(-10px);transition:opacity .4s,transform .4s}
+.tick.in{opacity:1;transform:none}
+.tick b{color:var(--org);font-weight:500;margin-right:8px}
+/* g5 money strip (top) */
+#ov4{left:0;right:0;top:clamp(66px,10vh,110px);display:flex;justify-content:center}
+.dash{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;max-width:900px;width:calc(100% - 40px)}
+.stat{background:rgba(20,15,8,.55);border:1px solid rgba(255,255,255,.16);backdrop-filter:blur(4px);
+  border-radius:6px;padding:12px 14px;text-align:center;opacity:0;transform:translateY(-10px);transition:opacity .4s,transform .4s}
+.stat.in{opacity:1;transform:none}
+.stat b{display:block;font-family:var(--mono);font-size:clamp(17px,2.2vw,23px);color:var(--amber);letter-spacing:.02em}
+.stat span{font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.65)}
+#closer{position:absolute;left:50%;transform:translateX(-50%);top:calc(clamp(66px,10vh,110px) + 96px);
+  font-family:var(--mono);font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:#fff;
+  background:rgba(233,113,28,.9);padding:8px 14px;border-radius:3px;opacity:0;transition:opacity .5s;white-space:nowrap}
+#closer.in{opacity:1}
+@media(max-width:640px){#ov0,#ov1{max-width:230px}.caption{max-width:70vw}#closer{white-space:normal;text-align:center;width:80vw}}
+
+/* loader */
+#loader{position:absolute;inset:0;z-index:6;display:flex;align-items:center;justify-content:center;
+  background:rgba(20,15,8,.78);transition:opacity .6s;color:#fff;text-align:center}
+#loader.gone{opacity:0;pointer-events:none}
+#loader p{font-family:var(--mono);font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--amber)}
+.lbar{height:3px;width:240px;background:rgba(255,255,255,.18);margin:14px auto 0;border-radius:2px;overflow:hidden}
+.lbar i{display:block;height:100%;width:0%;background:var(--org);transition:width .3s}
+#loader small{display:block;margin-top:12px;font-size:11px;color:rgba(255,255,255,.6)}
+
+/* flat fallback */
+.flat .seq{height:auto}
+.flat .stage{position:static;height:auto}
+.flat .stage video{position:static;height:56vh;opacity:1 !important;margin-bottom:2px}
+.flat .shade,.flat .caption,.flat .dots,.flat #loader,.flat .sample{display:none}
+.flat .ov{display:none}
+
+#creed{background:var(--stone);border-top:1px solid var(--hair)}
+.creedgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:18px;margin-top:30px}
+.cc{background:#fff;border:1px solid var(--hair);border-radius:6px;padding:22px}
+.cc b{font-family:var(--mono);font-size:11px;letter-spacing:.18em;color:var(--org2);text-transform:uppercase}
+.cc h3{font-weight:680;font-size:18px;margin:10px 0 6px}
+.cc p{font-size:14.5px;color:var(--body)}
+#next .nextrow{display:flex;gap:12px;flex-wrap:wrap;margin-top:26px}
+
+footer{background:var(--dark);color:#D8D0BE;padding:50px clamp(20px,5vw,72px) 36px}
+.foot{max-width:1080px;margin:0 auto;display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap;align-items:flex-end}
+.foot a{color:#F3B24A}
+.foot .note{color:#9C927C;max-width:560px;line-height:1.9;font-size:12px}
+</style>
+</head>
+<body>
+
+<div id="micro"><span>Chapter Two · The Gold Room</span><span><b>Oscar Mining SO</b> · Sanaag, Republic of Somaliland</span></div>
+
+<nav>
+  <a class="brand" href="index.html" aria-label="Oscar Mining SO — overview">
+    <svg viewBox="0 0 92 52" fill="none" aria-hidden="true">
+      <defs><linearGradient id="pg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FBB040"/><stop offset="1" stop-color="#E9711C"/></linearGradient></defs>
+      <path d="M4 44 L24 10 L33 26 L40 14 L52 44 Z" fill="url(#pg)"/>
+      <path d="M22 12 L27 20 L24 24 Z" fill="#FAF7F1"/>
+      <path d="M38 44 L58 6 L66 20 L72 10 L88 44 Z" fill="#221C14"/>
+      <path d="M56 9 L61 17 L58 21 Z" fill="#FAF7F1"/>
+      <path d="M6 48 C 34 42, 62 42, 88 48" stroke="#E9711C" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+    </svg>
+    <span><span class="bn">OSCAR MINING SO</span><span class="bs">RECLAIM YOUR FUTURE WITH US</span></span>
+  </a>
+  <div class="nl">
+    <a class="hz" href="index.html">Overview</a>
+    <a href="oscar-mining-so.html">The Mine</a>
+    <a class="cur" href="oscar-mining-so-vault-v2.html">The Gold Room</a>
+    <a class="hz" href="index.html#contact">Contact</a>
+  </div>
+</nav>
+
+<section id="intro">
+  <div class="wrap">
+    <p class="kick">Chapter two · The gold room</p>
+    <h1>One bar, interrogated.</h1>
+    <p class="lede" style="margin-top:14px">Scroll and the metal moves — tilt, stream, cool, stamp, stack. Stop anywhere; run it backwards and the bar melts again. At every stage the facts an investor would ask for surface beside the film.</p>
+    <p class="note" style="margin-top:10px">First load buffers the opening shots — give it a moment, then drag.</p>
+  </div>
+</section>
+
+<!-- ================= THE FILM ================= -->
+<section id="film" aria-label="Scroll-driven gold room film with data overlays">
+  <div class="seq" id="seq">
+    <div class="stage" id="stage">
+      <video id="v0" class="base" muted playsinline preload="auto" poster="https://d8j0ntlcm91z4.cloudfront.net/user_3GPt5hWCzN7NGc061uSMrjL0r7q/hf_20260827_105500_80823f1a-2ecb-4967-b5cd-f9c81409294e.png">
+        <source src="https://d8j0ntlcm91z4.cloudfront.net/user_3GPt5hWCzN7NGc061uSMrjL0r7q/hf_20260827_115907_6428bdf6-f511-4e29-ac3b-b18660915677.mp4" type="video/mp4">
+      </video>
+      <video id="v1" muted playsinline preload="auto" poster="https://d8j0ntlcm91z4.cloudfront.net/user_3GPt5hWCzN7NGc061uSMrjL0r7q/hf_20260827_105500_80823f1a-2ecb-4967-b5cd-f9c81409294e.png">
+        <source src="https://d8j0ntlcm91z4.cloudfront.net/user_3GPt5hWCzN7NGc061uSMrjL0r7q/hf_20260827_115913_18a57866-64ac-4021-bc64-eaa71c839471.mp4" type="video/mp4">
+      </video>
+      <video id="v2" muted playsinline preload="metadata" poster="https://d8j0ntlcm91z4.cloudfront.net/user_3GPt5hWCzN7NGc061uSMrjL0r7q/hf_20260827_105501_14b432d8-78b0-440c-b3f5-151c68616569.png">
+        <source src="https://d8j0ntlcm91z4.cloudfront.net/user_3GPt5hWCzN7NGc061uSMrjL0r7q/hf_20260827_115918_6afe0d91-b5a4-4c86-97ec-27612d7848c0.mp4" type="video/mp4">
+      </video>
+      <video id="v3" muted playsinline preload="metadata" poster="https://d8j0ntlcm91z4.cloudfront.net/user_3GPt5hWCzN7NGc061uSMrjL0r7q/hf_20260827_105501_14b432d8-78b0-440c-b3f5-151c68616569.png">
+        <source src="https://d8j0ntlcm91z4.cloudfront.net/user_3GPt5hWCzN7NGc061uSMrjL0r7q/hf_20260827_115924_cfa6f432-18a9-40a3-bdb1-47c1e24488c2.mp4" type="video/mp4">
+      </video>
+      <video id="v4" muted playsinline preload="metadata" poster="https://d8j0ntlcm91z4.cloudfront.net/user_3GPt5hWCzN7NGc061uSMrjL0r7q/hf_20260827_110747_a5b4056e-09d0-40d5-a4b4-f97b816cddf1.png">
+        <source src="https://d8j0ntlcm91z4.cloudfront.net/user_3GPt5hWCzN7NGc061uSMrjL0r7q/hf_20260827_120148_4db45e65-d347-4497-a12b-1531bce420e5.mp4" type="video/mp4">
+      </video>
+      <div class="shade"></div>
+
+      <!-- overlays -->
+      <div class="ov" id="ov0">
+        <div class="card">
+          <p class="ovtag" style="margin-bottom:8px">The registry</p>
+          <p class="line">POUR-2026-031</p>
+          <p class="line">17 Jul 2026 · 06:40</p>
+          <p class="line">Furnace 1,120 °C*</p>
+          <p class="line">Mold 03 · pre-heated</p>
+        </div>
+      </div>
+
+      <div class="ov" id="ov1">
+        <p class="ovtag">Fineness</p>
+        <div class="dial">
+          <svg width="110" height="110" viewBox="0 0 110 110" aria-hidden="true">
+            <circle cx="55" cy="55" r="46" fill="none" stroke="rgba(255,255,255,.16)" stroke-width="7"/>
+            <circle id="arc" cx="55" cy="55" r="46" fill="none" stroke="#E9711C" stroke-width="7"
+              stroke-linecap="round" stroke-dasharray="289" stroke-dashoffset="289" transform="rotate(-90 55 55)"/>
+          </svg>
+          <span class="pct" id="pct">0%</span>
+        </div>
+        <div class="bars">
+          <div class="brow"><span>Au</span><span class="track"><i class="fill" id="fAu"></i></span><span id="tAu">0.0</span></div>
+          <div class="brow"><span>Ag</span><span class="track"><i class="fill" id="fAg"></i></span><span id="tAg">0.0</span></div>
+          <div class="brow"><span>other</span><span class="track"><i class="fill" id="fOt"></i></span><span id="tOt">0.0</span></div>
+        </div>
+      </div>
+
+      <div class="ov" id="ov2">
+        <p class="ovtag">On the scale</p>
+        <div id="kg">0.00 kg</div>
+        <div id="oz">0 oz Au contained*</div>
+        <div id="lock">✓ Weight locked</div>
+      </div>
+
+      <div class="ov" id="ov3">
+        <p class="ovtag">Identity</p>
+        <div id="serial"></div>
+        <div class="ticks">
+          <p class="tick" id="tk0"><b>✓</b>Weighed · dual signature</p>
+          <p class="tick" id="tk1"><b>✓</b>Assayed · independent lab*</p>
+          <p class="tick" id="tk2"><b>✓</b>Sealed · numbered case</p>
+        </div>
+      </div>
+
+      <div class="ov" id="ov4">
+        <div class="dash">
+          <div class="stat" id="s0"><b>0</b><span>oz · July*</span></div>
+          <div class="stat" id="s1"><b>0</b><span>bars poured*</span></div>
+          <div class="stat" id="s2"><b>$0</b><span>margin / oz at spot*</span></div>
+          <div class="stat" id="s3"><b>0%</b><span>to the community fund</span></div>
+        </div>
+      </div>
+      <div id="closer">A missed report would itself be the news.</div>
+
+      <div class="caption">
+        <p class="shot" id="capShot"></p>
+        <h3 id="capTitle"></h3>
+        <p id="capText"></p>
+      </div>
+      <div class="dots" id="dots"><i></i><i></i><i></i><i></i><i></i></div>
+      <span class="sample">*sample data — verified at launch</span>
+
+      <div id="loader"><div>
+        <p>Buffering the gold room</p>
+        <div class="lbar"><i id="lfill"></i></div>
+        <small id="lpct">0%</small>
+      </div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= THE CREED ================= -->
+<section id="creed">
+  <div class="wrap">
+    <p class="kick reveal">The gold room creed</p>
+    <h2 class="reveal">Four habits that make a bar believable.</h2>
+    <div class="creedgrid">
+      <div class="cc reveal"><b>Witnessed</b><h3>Never alone with the gold</h3><p>No pour, weighing or packing happens with fewer than two authorised people present.</p></div>
+      <div class="cc reveal"><b>Written</b><h3>Ink before movement</h3><p>The bar exists in the book before it exists anywhere else. Paper first, then motion.</p></div>
+      <div class="cc reveal"><b>Checked</b><h3>Someone else's scale</h3><p>An independent assay checks our numbers on the other end. Disagreements are published, not buried.</p></div>
+      <div class="cc reveal"><b>Told</b><h3>Reported on the 5th</h3><p>Every bar this room produces appears in the monthly report — where all roads on this site end.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= NEXT ================= -->
+<section id="next">
+  <div class="wrap">
+    <p class="kick reveal">Where next</p>
+    <h2 class="reveal">See what the bars add up to.</h2>
+    <div class="nextrow reveal">
+      <a class="btn solid" href="index.html#performance">Monthly figures &amp; registry — overview</a>
+      <a class="btn ghost" href="oscar-mining-so.html">Chapter one · The Mine</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="foot">
+    <a class="brand" href="index.html" style="color:#D8D0BE">
+      <span><span class="bn">OSCAR MINING SO</span><span class="bs">RECLAIM YOUR FUTURE WITH US</span></span>
+    </a>
+    <p class="note">© 2026 Oscar Mining SO. Concept preview — footage AI-generated pending site film; figures marked * are illustrative samples until verified.</p>
+  </div>
+</footer>
+
+<script>
+(function(){
+"use strict";
+const REDUCED=matchMedia("(prefers-reduced-motion: reduce)").matches;
+const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+const sstep=(a,b,x)=>{const t=clamp((x-a)/(b-a),0,1);return t*t*(3-2*t);};
+const win=(x,a,b)=>sstep(a,b,x);
+const fmt=n=>Math.round(n).toLocaleString("en-US");
+
+const rio=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add("in");rio.unobserve(e.target);}}),{threshold:.12});
+document.querySelectorAll(".reveal").forEach(el=>rio.observe(el));
+
+const V=[0,1,2,3,4].map(i=>document.getElementById("v"+i));
+const seq=document.getElementById("seq");
+const capShot=document.getElementById("capShot"),capTitle=document.getElementById("capTitle"),capText=document.getElementById("capText");
+const dots=[...document.querySelectorAll("#dots i")];
+const ovs=[0,1,2,3,4].map(i=>document.getElementById("ov"+i));
+const loader=document.getElementById("loader"),lfill=document.getElementById("lfill"),lpct=document.getElementById("lpct");
+
+const SEG=[
+  {a:0.00,b:0.24},
+  {a:0.21,b:0.44},
+  {a:0.41,b:0.64},
+  {a:0.61,b:0.81},
+  {a:0.78,b:1.00}
+];
+const CAPS=[
+  {s:"Shot 01 · The tilt",t:"The melt leaves the furnace",x:"The crucible tips only when the book says so."},
+  {s:"Shot 02 · The stream",t:"Purity, measured mid-air",x:"The mold fills as the assay bars fill beside it."},
+  {s:"Shot 03 · The cool",t:"Weight settles with the metal",x:"Scroll up and the bar re-ignites; the number unsettles."},
+  {s:"Shot 04 · The stamp",t:"A number it keeps for life",x:"Identity struck into the surface — then checked, twice."},
+  {s:"Shot 05 · The stack",t:"July, settled",x:"What one month looks like when it's all been counted."}
+];
+
+if(REDUCED){
+  document.body.classList.add("flat");
+  V.forEach(v=>{v.loop=true;v.autoplay=true;v.play().catch(()=>{});});
+  return;
+}
+
+function prime(v){
+  if(v.dataset.primed)return;v.dataset.primed=1;
+  v.muted=true;v.preload="auto";
+  const p=v.play();
+  if(p&&p.then)p.then(()=>{v.pause();try{v.currentTime=0;}catch(e){}}).catch(()=>{});
+}
+prime(V[0]);prime(V[1]);
+let unlocked=false;
+["pointerdown","touchstart","wheel","keydown"].forEach(ev=>
+  addEventListener(ev,()=>{if(unlocked)return;unlocked=true;V.forEach(prime);},{once:true,passive:true}));
+
+function buffered(v){
+  try{
+    if(!v.duration||!isFinite(v.duration))return 0;
+    let e=0;for(let i=0;i<v.buffered.length;i++)e=Math.max(e,v.buffered.end(i));
+    return clamp(e/v.duration,0,1);
+  }catch(_){return 0;}
+}
+const t0=performance.now();
+(function loadloop(){
+  const f=(buffered(V[0])+buffered(V[1]))/2;
+  lfill.style.width=Math.round(f*100)+"%";lpct.textContent=Math.round(f*100)+"%";
+  if(f>=.97||performance.now()-t0>12000){loader.classList.add("gone");return;}
+  requestAnimationFrame(loadloop);
+})();
+
+function scrubTo(v,t){
+  if(v.readyState<1)return;
+  const d=Math.abs(v.currentTime-t);
+  if(d<0.02)return;
+  if(v.seeking&&d<0.35)return;
+  try{ if(v.fastSeek&&d>0.6)v.fastSeek(t); else v.currentTime=t; }catch(e){}
+}
+
+let pTar=0,pCur=0,shotIdx=-1;
+function onScroll(){
+  const r=seq.getBoundingClientRect();
+  pTar=clamp(-r.top/(r.height-innerHeight||1),0,1);
+}
+addEventListener("scroll",onScroll,{passive:true});
+addEventListener("resize",onScroll);
+onScroll();
+
+function setShot(i){
+  if(i===shotIdx)return;shotIdx=i;
+  dots.forEach((d,k)=>d.classList.toggle("on",k===i));
+  ovs.forEach((o,k)=>o.classList.toggle("on",k===i));
+  capShot.textContent=CAPS[i].s;capTitle.textContent=CAPS[i].t;capText.textContent=CAPS[i].x;
+}
+
+/* overlay handles */
+const regLines=[...document.querySelectorAll("#ov0 .line")];
+const arc=document.getElementById("arc"),pct=document.getElementById("pct");
+const fAu=document.getElementById("fAu"),fAg=document.getElementById("fAg"),fOt=document.getElementById("fOt");
+const tAu=document.getElementById("tAu"),tAg=document.getElementById("tAg"),tOt=document.getElementById("tOt");
+const kg=document.getElementById("kg"),oz=document.getElementById("oz"),ov2=document.getElementById("ov2");
+const serial=document.getElementById("serial");
+const ticks=[document.getElementById("tk0"),document.getElementById("tk1"),document.getElementById("tk2")];
+const stats=[document.getElementById("s0"),document.getElementById("s1"),document.getElementById("s2"),document.getElementById("s3")];
+const statB=stats.map(s=>s.querySelector("b"));
+const closer=document.getElementById("closer");
+const SERIAL="POUR-2026-031";
+const C=289;
+
+function updateOverlays(l0,l1,l2,l3,l4){
+  /* g1 registry */
+  const th=[.14,.32,.5,.68];
+  regLines.forEach((l,i)=>l.classList.toggle("in",l0>th[i]));
+  /* g2 purity */
+  const dp=win(l1,.1,.7);
+  arc.style.strokeDashoffset=(C*(1-.892*dp)).toFixed(1);
+  pct.textContent=(89.2*dp).toFixed(1)+"%";
+  const b1=win(l1,.25,.75),b2=win(l1,.35,.85),b3=win(l1,.45,.9);
+  fAu.style.width=(89.2*b1)+"%";tAu.textContent=(89.2*b1).toFixed(1);
+  fAg.style.width=(9.1*b2*4)+"%";tAg.textContent=(9.1*b2).toFixed(1);
+  fOt.style.width=(1.7*b3*4)+"%";tOt.textContent=(1.7*b3).toFixed(1);
+  /* g3 weight */
+  const wp=win(l2,.1,.68);
+  kg.textContent=(13.91*wp).toFixed(2)+" kg";
+  oz.textContent=fmt(399*wp)+" oz Au contained*";
+  ov2.classList.toggle("locked",l2>.72);
+  /* g4 identity */
+  const n=Math.round(SERIAL.length*win(l3,.08,.42));
+  serial.textContent=SERIAL.slice(0,n)+(n<SERIAL.length&&l3>.05?"_":"");
+  ticks[0].classList.toggle("in",l3>.5);
+  ticks[1].classList.toggle("in",l3>.62);
+  ticks[2].classList.toggle("in",l3>.74);
+  /* g5 money strip */
+  const vals=[
+    {v:3125,f:win(l4,.05,.3),fmt:x=>fmt(x)},
+    {v:46,f:win(l4,.2,.45),fmt:x=>fmt(x)},
+    {v:3315,f:win(l4,.38,.62),fmt:x=>"$"+fmt(x)},
+    {v:2.5,f:win(l4,.55,.78),fmt:x=>x.toFixed(1)+"%"}
+  ];
+  vals.forEach((d,i)=>{
+    stats[i].classList.toggle("in",d.f>0.01);
+    statB[i].textContent=d.fmt(d.v*d.f);
+  });
+  closer.classList.toggle("in",l4>.84);
+}
+
+let running=false,raf;
+function frame(){
+  pCur+=(pTar-pCur)*0.18;
+  if(Math.abs(pTar-pCur)<.0004)pCur=pTar;
+  const lps=SEG.map((s,i)=>{
+    const lp=clamp((pCur-s.a)/(s.b-s.a),0,1);
+    const v=V[i];
+    if(i>0)v.style.opacity=sstep(s.a,s.a+.05,pCur);
+    if(pCur>s.a-0.16)prime(v);
+    const dur=(isFinite(v.duration)&&v.duration)||10;
+    scrubTo(v,lp*Math.max(0,dur-0.05));
+    return lp;
+  });
+  updateOverlays(lps[0],lps[1],lps[2],lps[3],lps[4]);
+  let idx=0;
+  for(let i=0;i<SEG.length;i++)if(pCur>=SEG[i].a+.04||i===0)idx=i;
+  setShot(idx);
+  if(running)raf=requestAnimationFrame(frame);
+}
+new IntersectionObserver(es=>es.forEach(e=>{
+  if(e.isIntersecting){if(!running){running=true;raf=requestAnimationFrame(frame);}}
+  else{running=false;cancelAnimationFrame(raf);}
+}),{threshold:.02}).observe(seq);
+setShot(0);
+})();
+</script>
+</body>
+</html>

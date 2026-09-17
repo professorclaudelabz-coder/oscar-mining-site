@@ -1,0 +1,803 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Oscar Mining SO — Gold, mined properly. Reported monthly.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#FAF7F1;
+  --card:#FFFFFF;
+  --stone:#F1EBE0;
+  --ink:#221C14;
+  --body:#5A5343;
+  --mute:#8A8272;
+  --org:#E9711C;
+  --org2:#C75C10;
+  --gold:#B07C1F;
+  --hair:#E6DECF;
+  --dark:#241E15;
+  --disp:"Archivo",Segoe UI,Arial,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+html,body{overflow-x:clip}
+body{background:var(--bg);color:var(--ink);font-family:var(--disp);font-weight:420;font-size:17px;line-height:1.75;-webkit-font-smoothing:antialiased}
+::selection{background:var(--org);color:#fff}
+a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid var(--org);outline-offset:3px}
+img{display:block;width:100%;height:100%;object-fit:cover}
+
+h1{font-weight:740;font-size:clamp(38px,6vw,68px);line-height:1.06;letter-spacing:-.015em}
+h2{font-weight:700;font-size:clamp(28px,4vw,44px);line-height:1.1;letter-spacing:-.012em;margin-bottom:18px}
+h3{font-weight:650;font-size:20px;letter-spacing:-.005em}
+.kick{font-family:var(--mono);font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--org2);margin-bottom:16px}
+.lede{max-width:64ch;color:var(--body);font-size:clamp(16.5px,1.5vw,18.5px)}
+.note{font-family:var(--mono);font-size:11.5px;color:var(--mute);letter-spacing:.02em}
+.reveal{opacity:0;transform:translateY(20px);transition:opacity .7s ease,transform .7s ease}
+.reveal.in{opacity:1;transform:none}
+@media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}}
+section{padding:clamp(72px,9vw,120px) clamp(20px,5vw,72px)}
+.wrap{max-width:1180px;margin:0 auto}
+.btn{display:inline-flex;align-items:center;gap:10px;padding:15px 26px;border-radius:4px;font-weight:560;font-size:15px;
+  text-decoration:none;cursor:pointer;border:1.5px solid transparent;transition:all .2s}
+.btn.solid{background:var(--org);color:#fff}
+.btn.solid:hover{background:var(--org2)}
+.btn.ghost{border-color:var(--ink);color:var(--ink);background:transparent}
+.btn.ghost:hover{background:var(--ink);color:var(--bg)}
+.btn.light{border-color:rgba(255,255,255,.85);color:#fff}
+.btn.light:hover{background:#fff;color:var(--ink)}
+
+/* ---------- photo slots ---------- */
+.ph{position:relative;overflow:hidden;border-radius:6px;background:
+  linear-gradient(160deg,#D8B98A 0%,#B98E55 34%,#8A6A42 66%,#5C4A30 100%)}
+.ph::before{content:"";position:absolute;inset:0;opacity:.16;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='2'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E")}
+.ph svg.scene{position:absolute;inset:0;width:100%;height:100%}
+.ph img.realph{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:2}
+.ph .slot{position:absolute;left:14px;bottom:12px;right:14px;font-family:var(--mono);font-size:10px;letter-spacing:.1em;
+  text-transform:uppercase;color:rgba(255,255,255,.75);text-shadow:0 1px 3px rgba(0,0,0,.6)}
+.ph.tall{background:linear-gradient(200deg,#2E2415 0%,#6E4A1E 45%,#C98A2E 78%,#F3B24A 100%)}
+.ph.dark{background:linear-gradient(210deg,#171310 0%,#3A2B14 55%,#8A5A1E 100%)}
+.ph.dusk{background:linear-gradient(180deg,#41506B 0%,#8A6A52 55%,#3A2E20 100%)}
+
+/* ---------- topbar + nav ---------- */
+#micro{background:var(--dark);color:#D8D0BE;font-family:var(--mono);font-size:11px;letter-spacing:.08em;
+  padding:7px clamp(20px,5vw,72px);display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap}
+#micro b{color:#F3B24A;font-weight:500}
+nav{position:sticky;top:0;z-index:50;background:rgba(250,247,241,.92);backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--hair);display:flex;align-items:center;justify-content:space-between;
+  gap:16px;padding:13px clamp(20px,5vw,72px)}
+.brand{display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--ink)}
+.brand svg{height:34px;width:auto}
+.bn{font-weight:790;font-size:15.5px;letter-spacing:.11em}
+.bs{display:block;font-family:var(--mono);font-size:9px;letter-spacing:.13em;color:var(--org2);font-style:italic;margin-top:2px}
+.nl{display:flex;align-items:center;gap:clamp(14px,2.2vw,28px);font-size:14.5px;font-weight:480}
+.nl a{color:var(--ink);text-decoration:none}
+.nl a:hover{color:var(--org2)}
+.nl .btn{padding:10px 18px;font-size:13.5px}
+@media(max-width:860px){.nl a.hz{display:none}}
+
+/* ---------- hero ---------- */
+#hero{position:relative;min-height:92svh;display:flex;align-items:flex-end;padding:0;color:#fff}
+#hero .ph{position:absolute;inset:0;border-radius:0}
+#hero .scrim{position:absolute;inset:0;background:linear-gradient(180deg,rgba(20,15,8,.28) 0%,rgba(20,15,8,.12) 40%,rgba(20,15,8,.72) 100%)}
+#hero .inner{position:relative;z-index:2;width:100%;padding:120px clamp(20px,5vw,72px) 0}
+#hero .kick{color:#FFC989}
+#hero .lede{color:rgba(255,255,255,.88)}
+.statband{position:relative;z-index:2;margin-top:44px;background:rgba(20,15,8,.55);backdrop-filter:blur(8px);
+  border-top:1px solid rgba(255,255,255,.2);display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr))}
+.statband>div{padding:20px clamp(16px,2vw,30px);border-right:1px solid rgba(255,255,255,.14)}
+.statband>div:last-child{border-right:0}
+.statband b{display:block;font-weight:740;font-size:clamp(21px,2.4vw,29px);letter-spacing:-.01em}
+.statband span{font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.65)}
+
+/* ---------- editorial split ---------- */
+.split{display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(30px,5vw,70px);align-items:center}
+@media(max-width:880px){.split{grid-template-columns:1fr}}
+.split .ph{aspect-ratio:4/3}
+.facts{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border:1px solid var(--hair);border-radius:6px;
+  overflow:hidden;margin-top:34px;background:var(--card)}
+.facts>div{padding:18px 20px;border-right:1px solid var(--hair)}
+.facts>div:last-child{border-right:0}
+.facts b{display:block;font-weight:700;font-size:17px}
+.facts span{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--mute)}
+@media(max-width:640px){.facts{grid-template-columns:1fr}.facts>div{border-right:0;border-bottom:1px solid var(--hair)}.facts>div:last-child{border-bottom:0}}
+
+/* ---------- gold section ---------- */
+#gold{background:var(--stone)}
+.duo{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:38px 0 8px}
+.duo .ph{aspect-ratio:3/2}
+@media(max-width:760px){.duo{grid-template-columns:1fr}}
+.tablecard{background:var(--card);border:1px solid var(--hair);border-radius:8px;overflow:hidden;margin-top:30px;
+  box-shadow:0 18px 44px -28px rgba(34,28,20,.28)}
+.tablecard header{display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;align-items:center;
+  padding:18px 22px;border-bottom:1px solid var(--hair)}
+.tablecard header h3{font-size:17px}
+.badge{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--org2);
+  border:1px solid var(--org);border-radius:99px;padding:5px 12px;background:rgba(233,113,28,.07)}
+.twrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-family:var(--mono);font-size:13px;min-width:620px}
+th{font-weight:500;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--mute);text-align:right;
+  padding:12px 18px;border-bottom:1px solid var(--hair);background:#FCFAF5}
+th:first-child,td:first-child{text-align:left}
+td{padding:12px 18px;text-align:right;border-bottom:1px solid #F0EADD;color:var(--ink)}
+tbody tr:last-child td{border-bottom:0}
+tbody tr:hover td{background:#FBF6EC}
+.stpill{font-size:10px;letter-spacing:.08em;padding:3px 9px;border-radius:99px;background:#F3E9D8;color:#7A5A1E;white-space:nowrap}
+
+/* ---------- performance ---------- */
+.chartcard{background:var(--card);border:1px solid var(--hair);border-radius:8px;padding:24px 22px 14px;margin-top:34px}
+.chartcard h3{font-size:15px;margin-bottom:10px}
+canvas.chart{width:100%;height:250px;display:block}
+.sens{background:var(--card);border:1px solid var(--hair);border-radius:8px;padding:clamp(24px,3.5vw,40px);margin-top:26px}
+.sens .price{font-weight:760;font-size:clamp(38px,5.4vw,58px);letter-spacing:-.02em}
+.sens .price small{font-size:.42em;color:var(--mute);font-weight:500}
+input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:4px;border-radius:2px;background:var(--hair);margin:26px 0 8px}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:22px;height:22px;border-radius:50%;
+  background:var(--org);cursor:pointer;border:3px solid #fff;box-shadow:0 2px 10px rgba(34,28,20,.3)}
+input[type=range]::-moz-range-thumb{width:18px;height:18px;border-radius:50%;background:var(--org);cursor:pointer;border:3px solid #fff}
+.souts{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;margin-top:26px}
+.sout{background:#FCFAF5;border:1px solid var(--hair);border-radius:6px;padding:16px 18px}
+.sout b{display:block;font-weight:740;font-size:clamp(20px,2.2vw,26px);letter-spacing:-.01em}
+.sout span{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--mute)}
+
+/* ---------- custody strip ---------- */
+.chain{display:flex;gap:0;margin-top:36px;overflow-x:auto;padding-bottom:8px}
+.step{min-width:138px;flex:1;position:relative;padding:0 12px}
+.step::before{content:"";position:absolute;top:8px;left:0;right:0;border-top:2px solid var(--hair)}
+.step i{position:relative;display:block;width:17px;height:17px;border-radius:50%;background:var(--org);border:3px solid var(--bg);margin-bottom:12px;font-style:normal}
+.step h4{font-weight:650;font-size:14.5px}
+.step p{font-family:var(--mono);font-size:10.5px;color:var(--mute);letter-spacing:.06em;margin-top:4px;text-transform:uppercase}
+
+/* ---------- responsibility ---------- */
+#reclaim .split .ph{aspect-ratio:16/10}
+.cols3{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:18px;margin-top:38px}
+.rc{background:var(--card);border:1px solid var(--hair);border-left:4px solid var(--org);border-radius:6px;padding:24px 24px}
+.rc h3{margin-bottom:8px}
+.rc p{font-size:15px;color:var(--body)}
+
+/* ---------- field strip ---------- */
+#field{background:var(--stone);padding-top:clamp(56px,7vw,84px);padding-bottom:clamp(56px,7vw,84px)}
+.strip{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.strip .ph{aspect-ratio:16/9}
+@media(max-width:760px){.strip{grid-template-columns:1fr}}
+.cap{font-family:var(--mono);font-size:11px;color:var(--mute);letter-spacing:.06em;margin-top:8px;text-transform:uppercase}
+
+/* ---------- reports ---------- */
+.replist{border:1px solid var(--hair);border-radius:8px;background:var(--card);overflow:hidden;margin-top:34px}
+.rep{display:flex;justify-content:space-between;gap:14px;align-items:center;padding:16px 22px;border-bottom:1px solid var(--hair);flex-wrap:wrap}
+.rep:last-child{border-bottom:0}
+.rep b{font-weight:600;font-size:15px}
+.rep .mono{font-size:12px;color:var(--mute)}
+.rep .due{color:var(--org2)}
+
+/* ---------- annex cards ---------- */
+.annex{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:36px}
+@media(max-width:760px){.annex{grid-template-columns:1fr}}
+.ax{border:1px solid var(--hair);border-radius:8px;background:var(--card);padding:26px 26px;text-decoration:none;color:var(--ink);transition:box-shadow .2s,transform .2s}
+.ax:hover{box-shadow:0 18px 40px -24px rgba(34,28,20,.35);transform:translateY(-2px)}
+.ax .kick{margin-bottom:8px}
+.ax p{font-size:15px;color:var(--body);margin-top:6px}
+.ax .go{display:inline-block;margin-top:14px;font-weight:600;color:var(--org2)}
+
+/* ---------- footer ---------- */
+footer{background:var(--dark);color:#D8D0BE;padding:70px clamp(20px,5vw,72px) 46px}
+.foot{max-width:1180px;margin:0 auto}
+.foot h2{color:#FAF7F1}
+.foot .grid{display:flex;justify-content:space-between;gap:30px;flex-wrap:wrap;margin-top:38px;align-items:flex-end}
+.foot a{color:#F3B24A}
+.foot .note{color:#9C927C;max-width:560px;line-height:1.9}
+</style>
+</head>
+<body>
+
+<div id="micro"><span>Sanaag Region · Republic of Somaliland</span><span>Reporting monthly — next report <b>5 Sep 2026</b></span></div>
+
+<nav>
+  <a class="brand" href="#hero" aria-label="Oscar Mining SO — home">
+    <svg viewBox="0 0 92 52" fill="none" aria-hidden="true">
+      <defs><linearGradient id="pg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FBB040"/><stop offset="1" stop-color="#E9711C"/></linearGradient></defs>
+      <path d="M4 44 L24 10 L33 26 L40 14 L52 44 Z" fill="url(#pg)"/>
+      <path d="M22 12 L27 20 L24 24 Z" fill="#FAF7F1"/>
+      <path d="M38 44 L58 6 L66 20 L72 10 L88 44 Z" fill="#221C14"/>
+      <path d="M56 9 L61 17 L58 21 Z" fill="#FAF7F1"/>
+      <path d="M6 48 C 34 42, 62 42, 88 48" stroke="#E9711C" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+    </svg>
+    <span><span class="bn">OSCAR MINING SO</span><span class="bs">RECLAIM YOUR FUTURE WITH US</span></span>
+  </a>
+  <div class="nl">
+    <a class="hz" href="#operation">Operation</a>
+    <a class="hz" href="#gold">The gold</a>
+    <a class="hz" href="oscar-mining-investors.html">Investors</a>
+    <a class="hz" href="#performance">Performance</a>
+    <a class="hz" href="#reclaim">Responsibility</a>
+    <a class="hz" href="#reports">Reports</a>
+    <a class="btn solid" href="#contact">Investor contact</a>
+  </div>
+</nav>
+
+<!-- ================= HERO ================= -->
+<section id="hero">
+  <div class="ph" data-slot="1">
+    <img class="realph" src="https://d8j0ntlcm91z4.cloudfront.net/user_3GPt5hWCzN7NGc061uSMrjL0r7q/hf_20260827_105502_a21ccbc7-31ae-4a14-80de-f374894495dd.png" alt="Aerial view of the terraced open pit at golden hour" onerror="this.remove()">
+    <svg class="scene" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+      <defs>
+        <linearGradient id="s1g" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#C99658"/><stop offset=".3" stop-color="#A87C48"/><stop offset="1" stop-color="#5C4630"/>
+        </linearGradient>
+        <radialGradient id="s1sun" cx=".5" cy=".5" r=".5">
+          <stop offset="0" stop-color="#FFE9B8" stop-opacity=".95"/><stop offset=".4" stop-color="#F3B76A" stop-opacity=".5"/><stop offset="1" stop-color="#F3B76A" stop-opacity="0"/>
+        </radialGradient>
+        <radialGradient id="s1haze" cx=".5" cy=".5" r=".5">
+          <stop offset="0" stop-color="#E8C89A" stop-opacity=".5"/><stop offset="1" stop-color="#E8C89A" stop-opacity="0"/>
+        </radialGradient>
+      </defs>
+      <rect width="1600" height="900" fill="url(#s1g)"/>
+      <circle cx="280" cy="150" r="360" fill="url(#s1sun)"/>
+      <path d="M0,215 L260,165 L520,205 L820,150 L1140,200 L1400,160 L1600,195 L1600,300 L0,300 Z" fill="#7A5C3E" opacity=".85"/>
+      <path d="M0,265 L340,225 L700,265 L1050,230 L1380,270 L1600,245 L1600,360 L0,360 Z" fill="#6A4E34"/>
+      <ellipse cx="900" cy="560" rx="560" ry="300" fill="#8A6A46"/>
+      <ellipse cx="898" cy="565" rx="490" ry="258" fill="#7A5C3C"/>
+      <ellipse cx="896" cy="572" rx="415" ry="216" fill="#8C6C44"/>
+      <ellipse cx="894" cy="578" rx="340" ry="176" fill="#6E5234"/>
+      <ellipse cx="892" cy="584" rx="266" ry="136" fill="#7E5E3A"/>
+      <ellipse cx="890" cy="590" rx="194" ry="98" fill="#5E462C"/>
+      <ellipse cx="888" cy="596" rx="124" ry="62" fill="#6A4E30"/>
+      <ellipse cx="886" cy="600" rx="62" ry="30" fill="#42311F"/>
+      <path d="M886,600 A62,30 0 0,1 948,600 A124,62 0 0,1 1010,596 A194,98 0 0,1 1082,590 A266,136 0 0,1 1156,584 A340,176 0 0,1 1232,578" fill="none" stroke="#C9A46A" stroke-width="14" stroke-linecap="round" opacity=".8"/>
+      <path d="M470,470 A490,258 0 0,1 900,308" fill="none" stroke="#D9AE6E" stroke-width="5" opacity=".55"/>
+      <path d="M545,505 A415,216 0 0,1 900,357" fill="none" stroke="#D9AE6E" stroke-width="4" opacity=".5"/>
+      <path d="M1320,660 A490,258 0 0,1 1010,800" fill="none" stroke="#3A2C1C" stroke-width="7" opacity=".45"/>
+      <rect x="872" y="592" width="12" height="6" fill="#F7941D"/>
+      <rect x="906" y="601" width="10" height="5" fill="#E9711C"/>
+      <ellipse cx="700" cy="430" rx="230" ry="80" fill="url(#s1haze)"/>
+      <ellipse cx="1150" cy="700" rx="300" ry="100" fill="url(#s1haze)" opacity=".6"/>
+      <rect width="1600" height="900" fill="#2E2010" opacity=".08"/>
+    </svg>
+    <span class="slot">Concept illustration — replaced by site photography</span>
+  </div>
+  <div class="scrim"></div>
+  <div class="inner">
+    <p class="kick">Oscar Mining SO — Sanaag gold operation</p>
+    <h1 class="reveal">Gold, mined properly.<br>Reported monthly.</h1>
+    <p class="lede reveal" style="margin-top:20px">An operating gold mine in the highlands of Sanaag, Republic of Somaliland. We mine carefully, log everything, and publish our production to investors every month — ounces, grade, costs and community share.</p>
+    <div class="reveal" style="display:flex;gap:12px;flex-wrap:wrap;margin-top:30px">
+      <a class="btn solid" href="#reports">Read the July report</a>
+      <a class="btn light" href="#operation">Our operation</a>
+    </div>
+  </div>
+  <div class="statband">
+    <div><b>18,440 oz</b><span>Gold poured · YTD 2026*</span></div>
+    <div><b>$1,485 /oz</b><span>All-in sustaining cost*</span></div>
+    <div><b>91.4%</b><span>Recovery · July*</span></div>
+    <div><b>5 Sep 2026</b><span>Next monthly report</span></div>
+  </div>
+</section>
+
+<!-- ================= OPERATION ================= -->
+<section id="operation">
+  <div class="wrap split">
+    <div>
+      <p class="kick reveal">The operation</p>
+      <h2 class="reveal">A working mine, run like a ledger.</h2>
+      <p class="lede reveal">Gold has been won from these hills for generations — in quartz veins through the old basement rock, and in the river gravels below. Oscar Mining SO works both: a benched open pit on the vein system, with controlled recovery of the alluvials.</p>
+      <p class="lede reveal" style="margin-top:14px">What sets us apart isn't the geology. It's the discipline: every tonne logged, every pour weighed and witnessed, every month reported to the people who backed us.</p>
+      <div class="facts reveal">
+        <div><b>Open pit + alluvial</b><span>Mining method</span></div>
+        <div><b>Sanaag highlands</b><span>Location</span></div>
+        <div><b>Local-first hiring</b><span>Workforce</span></div>
+      </div>
+    </div>
+    <div class="ph reveal" data-slot="6">
+    <img class="realph" loading="lazy" src="https://d8j0ntlcm91z4.cloudfront.net/user_3GPt5hWCzN7NGc061uSMrjL0r7q/hf_20260827_105500_f7f52358-ed33-4cae-b4fc-ec33032f8bf8.png" alt="Two crew members walking the pit bench at dawn" onerror="this.remove()">
+    <svg class="scene" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+      <defs>
+        <linearGradient id="s6sky" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#EAC98E"/><stop offset=".6" stop-color="#D9A468"/><stop offset="1" stop-color="#C98A4E"/>
+        </linearGradient>
+        <radialGradient id="s6sun" cx=".5" cy=".5" r=".5">
+          <stop offset="0" stop-color="#FFF3D2"/><stop offset=".35" stop-color="#FFDf9E" stop-opacity=".7"/><stop offset="1" stop-color="#FFDF9E" stop-opacity="0"/>
+        </radialGradient>
+      </defs>
+      <rect width="1600" height="520" fill="url(#s6sky)"/>
+      <circle cx="1230" cy="330" r="420" fill="url(#s6sun)"/>
+      <circle cx="1230" cy="330" r="52" fill="#FFF6DE"/>
+      <path d="M0,470 L420,430 L820,470 L1210,440 L1600,470 L1600,540 L0,540 Z" fill="#9A7448" opacity=".8"/>
+      <rect y="500" width="1600" height="400" fill="#B98E5C"/>
+      <path d="M0,500 L520,470 L520,410 L0,435 Z" fill="#8A6A46"/>
+      <path d="M0,435 L520,410 L520,352 L0,372 Z" fill="#75583A"/>
+      <path d="M0,372 L520,352 L520,296 L0,310 Z" fill="#8A6A46"/>
+      <path d="M0,310 L520,296 L520,240 L0,248 Z" fill="#6A4E34"/>
+      <path d="M0,248 L520,240 L520,150 L0,150 Z" fill="#7A5C3E"/>
+      <path d="M840,640 L560,700 L575,706 L850,648 Z" fill="#4A4E5E" opacity=".4"/>
+      <path d="M940,655 L660,720 L676,726 L950,663 Z" fill="#4A4E5E" opacity=".4"/>
+      <g>
+        <rect x="826" y="596" width="6" height="26" fill="#2E2418"/><rect x="836" y="596" width="6" height="26" fill="#2E2418"/>
+        <rect x="822" y="566" width="24" height="34" rx="5" fill="#F7941D"/>
+        <rect x="826" y="556" width="16" height="12" rx="3" fill="#8A6248"/>
+        <circle cx="834" cy="549" r="9" fill="#F2EFE6"/>
+        <rect x="845" y="570" width="5" height="22" fill="#E9711C" transform="rotate(12 845 570)"/>
+      </g>
+      <g>
+        <rect x="926" y="608" width="6" height="28" fill="#2E2418"/><rect x="936" y="608" width="6" height="28" fill="#2E2418"/>
+        <rect x="921" y="576" width="26" height="36" rx="5" fill="#F7941D"/>
+        <rect x="926" y="566" width="16" height="12" rx="3" fill="#7A5640"/>
+        <circle cx="934" cy="559" r="9" fill="#F2EFE6"/>
+      </g>
+      <ellipse cx="1180" cy="560" rx="360" ry="90" fill="#FFDF9E" opacity=".22"/>
+      <rect width="1600" height="900" fill="#3A2410" opacity=".07"/>
+    </svg>
+    <span class="slot">Concept illustration — replaced by site photography</span>
+  </div>
+  </div>
+</section>
+
+<!-- ================= THE GOLD ================= -->
+<section id="gold">
+  <div class="wrap">
+    <p class="kick reveal">The gold</p>
+    <h2 class="reveal">From furnace to registry.</h2>
+    <p class="lede reveal">Doré leaves this mine numbered, weighed, assayed and sealed. Investors see the same registry we keep on site.</p>
+    <div class="duo reveal">
+      <div class="ph tall" data-slot="2">
+    <img class="realph" loading="lazy" src="https://d8j0ntlcm91z4.cloudfront.net/user_3GPt5hWCzN7NGc061uSMrjL0r7q/hf_20260827_105500_80823f1a-2ecb-4967-b5cd-f9c81409294e.png" alt="Molten gold pouring from the crucible in the smelt house" onerror="this.remove()">
+    <svg class="scene" viewBox="0 0 1200 800" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+      <defs>
+        <radialGradient id="s2glow" cx=".5" cy=".5" r=".5">
+          <stop offset="0" stop-color="#FFD98A" stop-opacity=".9"/><stop offset=".45" stop-color="#E9711C" stop-opacity=".35"/><stop offset="1" stop-color="#E9711C" stop-opacity="0"/>
+        </radialGradient>
+        <linearGradient id="s2stream" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#FFF6D2"/><stop offset="1" stop-color="#FFC24E"/>
+        </linearGradient>
+      </defs>
+      <rect width="1200" height="800" fill="#0C0906"/>
+      <rect width="1200" height="800" fill="#1A120A" opacity=".6"/>
+      <circle cx="760" cy="330" r="380" fill="url(#s2glow)"/>
+      <g transform="rotate(-24 740 300)">
+        <path d="M660,260 L830,260 L810,360 L680,360 Z" fill="#241A10"/>
+        <ellipse cx="745" cy="260" rx="85" ry="22" fill="#3A2A16"/>
+        <ellipse cx="745" cy="262" rx="66" ry="14" fill="#FFCE7A"/>
+      </g>
+      <path d="M690,318 C678,400 664,470 660,560" stroke="#FFB347" stroke-width="30" stroke-linecap="round" fill="none" opacity=".45"/>
+      <path d="M690,318 C678,400 664,470 660,560" stroke="url(#s2stream)" stroke-width="11" stroke-linecap="round" fill="none"/>
+      <rect x="596" y="556" width="150" height="70" rx="8" fill="#181209"/>
+      <ellipse cx="670" cy="566" rx="58" ry="13" fill="#FFCE7A"/>
+      <ellipse cx="670" cy="566" rx="58" ry="13" fill="#FFF3C4" opacity=".5"/>
+      <ellipse cx="668" cy="640" rx="150" ry="26" fill="#E9711C" opacity=".18"/>
+      <g fill="#FFD27A">
+        <circle cx="600" cy="480" r="3.4"/><circle cx="732" cy="440" r="2.6"/><circle cx="560" cy="560" r="2.2"/>
+        <circle cx="770" cy="520" r="3"/><circle cx="640" cy="392" r="2.4"/><circle cx="708" cy="590" r="2.8"/>
+        <circle cx="540" cy="430" r="2"/><circle cx="806" cy="470" r="2.2"/>
+      </g>
+      <path d="M330,800 L330,470 C330,410 360,368 402,352 L430,344 C470,330 488,300 492,262 L560,262 C560,320 540,368 492,392 L470,402 C440,416 428,444 428,486 L428,800 Z" fill="#15100A"/>
+      <path d="M430,344 C470,330 488,300 492,262 L510,262 C506,308 486,344 448,360 Z" fill="#AEB6C2" opacity=".4"/>
+      <circle cx="470" cy="300" r="26" fill="#0A0805"/>
+      <circle cx="474" cy="296" r="18" fill="#FFB347" opacity=".35"/>
+      <rect width="1200" height="800" fill="#000000" opacity=".12"/>
+    </svg>
+    <span class="slot">Concept illustration — replaced by site photography</span>
+  </div>
+      <div class="ph dark" data-slot="3">
+    <img class="realph" loading="lazy" src="https://d8j0ntlcm91z4.cloudfront.net/user_3GPt5hWCzN7NGc061uSMrjL0r7q/hf_20260827_105501_14b432d8-78b0-440c-b3f5-151c68616569.png" alt="Freshly cast gold doré bars stacked in the gold room" onerror="this.remove()">
+    <svg class="scene" viewBox="0 0 1200 800" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+      <defs>
+        <radialGradient id="s3spot" cx=".5" cy=".32" r=".62">
+          <stop offset="0" stop-color="#4A3A20"/><stop offset=".55" stop-color="#241C10"/><stop offset="1" stop-color="#100C07"/>
+        </radialGradient>
+        <linearGradient id="s3top" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#F7CE72"/><stop offset=".55" stop-color="#E0AC3E"/><stop offset="1" stop-color="#C08A2A"/>
+        </linearGradient>
+        <linearGradient id="s3front" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#C08A2A"/><stop offset="1" stop-color="#7A5A1E"/>
+        </linearGradient>
+      </defs>
+      <rect width="1200" height="800" fill="url(#s3spot)"/>
+      <rect y="520" width="1200" height="280" fill="#17120B"/>
+      <path d="M0,520 L1200,520 L1200,526 L0,526 Z" fill="#3A2E1C" opacity=".7"/>
+      <path d="M120,600 L640,588" stroke="#2A2114" stroke-width="3" opacity=".8"/>
+      <path d="M300,680 L1080,662" stroke="#2A2114" stroke-width="2.5" opacity=".7"/>
+      <path d="M760,570 L1160,580" stroke="#231B10" stroke-width="3" opacity=".8"/>
+      <ellipse cx="600" cy="560" rx="430" ry="80" fill="#5C4626" opacity=".22"/>
+      <ellipse cx="470" cy="620" rx="210" ry="26" fill="#050403" opacity=".65"/>
+      <ellipse cx="770" cy="632" rx="200" ry="24" fill="#050403" opacity=".6"/>
+      <g>
+        <path d="M300,540 L620,540 L590,616 L330,616 Z" fill="url(#s3top)"/>
+        <path d="M330,616 L590,616 L590,648 L330,648 Z" fill="url(#s3front)"/>
+        <path d="M590,616 L620,540 L620,570 L590,648 Z" fill="#6A4E1A"/>
+        <rect x="398" y="560" width="120" height="34" rx="6" fill="#B0802A" opacity=".55"/>
+        <path d="M416,570 h84 M416,580 h60" stroke="#7A5A1E" stroke-width="4" opacity=".8"/>
+        <path d="M318,548 L470,548" stroke="#FFF0BE" stroke-width="7" opacity=".7" stroke-linecap="round"/>
+      </g>
+      <g>
+        <path d="M650,552 L940,552 L916,622 L672,622 Z" fill="url(#s3top)"/>
+        <path d="M672,622 L916,622 L916,652 L672,652 Z" fill="url(#s3front)"/>
+        <path d="M916,622 L940,552 L940,580 L916,652 Z" fill="#6A4E1A"/>
+        <path d="M664,560 L800,560" stroke="#FFF0BE" stroke-width="6" opacity=".6" stroke-linecap="round"/>
+      </g>
+      <g>
+        <path d="M452,470 L760,470 L734,540 L476,540 Z" fill="url(#s3top)"/>
+        <path d="M476,540 L734,540 L734,570 L476,570 Z" fill="url(#s3front)"/>
+        <path d="M734,540 L760,470 L760,498 L734,570 Z" fill="#6A4E1A"/>
+        <rect x="548" y="488" width="112" height="32" rx="6" fill="#B0802A" opacity=".5"/>
+        <path d="M566,498 h78 M566,508 h52" stroke="#7A5A1E" stroke-width="4" opacity=".8"/>
+        <path d="M468,478 L640,478" stroke="#FFF6D2" stroke-width="8" opacity=".8" stroke-linecap="round"/>
+      </g>
+      <rect width="1200" height="800" fill="#000000" opacity=".1"/>
+    </svg>
+    <span class="slot">Concept illustration — replaced by site photography</span>
+  </div>
+    </div>
+    <div class="tablecard reveal">
+      <header><h3>Recent pours</h3><span class="badge">Sample data — verified records at launch</span></header>
+      <div class="twrap">
+        <table aria-label="Recent pour registry (sample)">
+          <thead><tr><th>Pour ID</th><th>Date</th><th>Weight</th><th>Gold (oz)</th><th>Fineness</th><th>Status</th></tr></thead>
+          <tbody id="pours"></tbody>
+        </table>
+      </div>
+    </div>
+    <div class="chain reveal" role="list" aria-label="Chain of custody">
+      <div class="step" role="listitem"><i></i><h4>Blast</h4><p>Surveyed</p></div>
+      <div class="step" role="listitem"><i></i><h4>Haul</h4><p>Tallied</p></div>
+      <div class="step" role="listitem"><i></i><h4>Mill</h4><p>Assayed</p></div>
+      <div class="step" role="listitem"><i></i><h4>Pour</h4><p>Witnessed</p></div>
+      <div class="step" role="listitem"><i></i><h4>Seal</h4><p>Dual-key</p></div>
+      <div class="step" role="listitem"><i></i><h4>Export</h4><p>Escorted</p></div>
+      <div class="step" role="listitem"><i></i><h4>Sale</h4><p>Reconciled</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= PERFORMANCE ================= -->
+<section id="performance">
+  <div class="wrap">
+    <p class="kick reveal">Performance</p>
+    <h2 class="reveal">The numbers, every month.</h2>
+    <p class="lede reveal">Most producers report quarterly. We publish a full production report on the 5th of every month — and the figures below update with it.</p>
+
+    <div class="chartcard reveal">
+      <h3>Gold poured — ounces per month, 2026</h3>
+      <canvas class="chart" id="chartOz"></canvas>
+    </div>
+
+    <div class="tablecard reveal" style="margin-top:26px">
+      <header><h3>Monthly production — 2026</h3><span class="badge">Sample data</span></header>
+      <div class="twrap">
+        <table aria-label="Monthly production totals (sample)">
+          <thead><tr><th>Month</th><th>Gold (oz)</th><th>Grade (g/t)</th><th>Ore milled (t)</th><th>Recovery</th></tr></thead>
+          <tbody id="months"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="sens reveal">
+      <p class="kick" style="margin-bottom:6px">Gold price sensitivity</p>
+      <div class="price" id="bigprice">$4,800<small> per ounce</small></div>
+      <input type="range" id="pslide" min="2000" max="6000" step="25" value="4800" aria-label="Gold price in US dollars per ounce">
+      <p class="note">Drag to test any gold price. Margin and revenue recalculate against our sample all-in sustaining cost of $1,485/oz.</p>
+      <div class="souts">
+        <div class="sout"><b id="o_margin">$3,315</b><span>Margin per ounce</span></div>
+        <div class="sout"><b id="o_july">$15.0M</b><span>July revenue (3,125 oz)</span></div>
+        <div class="sout"><b id="o_ytd">$88.5M</b><span>YTD revenue (18,440 oz)</span></div>
+        <div class="sout"><b id="o_fund">$2.2M</b><span>Community fund (461 oz)</span></div>
+      </div>
+      <p class="note" style="margin-top:18px">Illustrative analysis, not a forecast. Verified costs and realized prices replace samples at launch. Nothing on this page is investment advice.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= RESPONSIBILITY ================= -->
+<section id="reclaim">
+  <div class="wrap split">
+    <div class="ph dusk reveal" data-slot="7">
+    <img class="realph" loading="lazy" src="https://d8j0ntlcm91z4.cloudfront.net/user_3GPt5hWCzN7NGc061uSMrjL0r7q/hf_20260827_105501_22a6ca54-b93f-4926-94d4-bdd56cea2786.png" alt="Community borehole among acacias in the Sanaag highlands" onerror="this.remove()">
+    <svg class="scene" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+      <defs>
+        <linearGradient id="s7sky" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#F3CE92"/><stop offset=".62" stop-color="#E0A868"/><stop offset="1" stop-color="#C98A4E"/>
+        </linearGradient>
+        <radialGradient id="s7sun" cx=".5" cy=".5" r=".5">
+          <stop offset="0" stop-color="#FFF6DE"/><stop offset=".4" stop-color="#FFDF9E" stop-opacity=".6"/><stop offset="1" stop-color="#FFDF9E" stop-opacity="0"/>
+        </radialGradient>
+      </defs>
+      <rect width="1600" height="560" fill="url(#s7sky)"/>
+      <circle cx="420" cy="300" r="380" fill="url(#s7sun)"/>
+      <circle cx="420" cy="300" r="44" fill="#FFF8E6"/>
+      <path d="M0,430 L300,380 L620,425 L980,370 L1300,420 L1600,385 L1600,470 L0,470 Z" fill="#B08258" opacity=".55"/>
+      <path d="M0,470 L380,435 L760,472 L1140,440 L1600,475 L1600,540 L0,540 Z" fill="#A8845A" opacity=".85"/>
+      <rect y="520" width="1600" height="380" fill="#B9925E"/>
+      <path d="M0,540 Q800,505 1600,545 L1600,900 L0,900 Z" fill="#A8845A"/>
+      <g fill="#3A2E1C">
+        <path d="M1180,505 C1140,502 1120,486 1128,472 C1104,470 1096,452 1112,442 C1130,428 1196,426 1226,438 C1252,430 1284,438 1288,454 C1306,462 1300,482 1276,486 C1268,500 1220,508 1180,505 Z"/>
+        <rect x="1196" y="500" width="7" height="46"/>
+        <path d="M1196,516 L1176,540 M1203,520 L1220,542" stroke="#3A2E1C" stroke-width="5"/>
+      </g>
+      <g fill="#453723" opacity=".9">
+        <path d="M760,520 C734,518 722,507 728,497 C712,496 707,484 718,478 C730,468 774,467 794,475 C812,470 832,475 834,486 C846,491 842,504 826,507 C820,516 788,522 760,520 Z"/>
+        <rect x="770" y="517" width="5" height="30"/>
+      </g>
+      <ellipse cx="360" cy="720" rx="230" ry="46" fill="#C9B896"/>
+      <ellipse cx="360" cy="712" rx="230" ry="46" fill="#D9CCA8"/>
+      <g fill="#2E2418">
+        <rect x="330" y="560" width="16" height="150"/>
+        <path d="M338,566 L432,540 L436,552 L346,578 Z"/>
+        <rect x="424" y="528" width="10" height="26" rx="4"/>
+        <path d="M300,610 L330,610 L330,624 L312,624 L312,660 L300,660 Z"/>
+        <ellipse cx="306" cy="700" rx="26" ry="8" opacity=".8"/>
+      </g>
+      <g>
+        <rect x="880" y="560" width="16" height="34" rx="4" fill="#8A4E2A"/>
+        <circle cx="888" cy="551" r="8" fill="#2E2418"/>
+        <rect x="878" y="592" width="8" height="22" fill="#2E2418"/><rect x="888" y="592" width="8" height="22" fill="#2E2418"/>
+        <rect x="898" y="576" width="12" height="16" rx="2" fill="#F3CE4A"/>
+      </g>
+      <g>
+        <rect x="932" y="566" width="15" height="32" rx="4" fill="#F7941D"/>
+        <circle cx="939" cy="557" r="7.5" fill="#2E2418"/>
+        <rect x="930" y="596" width="7" height="20" fill="#2E2418"/><rect x="940" y="596" width="7" height="20" fill="#2E2418"/>
+      </g>
+      <ellipse cx="500" cy="640" rx="420" ry="90" fill="#FFDF9E" opacity=".16"/>
+      <rect width="1600" height="900" fill="#3A2410" opacity=".06"/>
+    </svg>
+    <span class="slot">Concept illustration — replaced by site photography</span>
+  </div>
+    <div>
+      <p class="kick reveal">Responsibility</p>
+      <h2 class="reveal">Reclaim your future.</h2>
+      <p class="lede reveal">It's on our logo because it's the plan. Before profit is taken, 2.5% of every pour — <b id="fundline">461 oz so far this year</b> — is set aside for the communities of Sanaag and the land we work.</p>
+      <div class="cols3">
+        <div class="rc reveal"><h3>Land, rehabilitated</h3><p>Mined ground is re-shaped, capped and re-seeded behind the pit as we go — photographed and published in the monthly report.</p></div>
+        <div class="rc reveal"><h3>Hills hired first</h3><p>Jobs and paid training go first to the surrounding districts — labourer to plant operator, surveyor, geologist's assistant.</p></div>
+        <div class="rc reveal"><h3>Fund what lasts</h3><p>Schools, clinic supplies and boreholes, chosen with district elders and reported in the same ledger as the gold.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FROM THE FIELD ================= -->
+<section id="field">
+  <div class="wrap">
+    <p class="kick reveal">From the field</p>
+    <div class="strip reveal">
+      <div>
+        <div class="ph" data-slot="4">
+    <img class="realph" loading="lazy" src="https://d8j0ntlcm91z4.cloudfront.net/user_3GPt5hWCzN7NGc061uSMrjL0r7q/hf_20260827_105501_2db7a929-1f9d-48dc-bef8-2c033f3322f6.png" alt="Drill core trays with quartz-veined rock core" onerror="this.remove()">
+    <svg class="scene" viewBox="0 0 1200 800" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+      <defs>
+        <linearGradient id="s4bg" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#D9C295"/><stop offset="1" stop-color="#C0A26E"/>
+        </linearGradient>
+        <linearGradient id="s4core" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#B2ACA2"/><stop offset=".5" stop-color="#918B81"/><stop offset="1" stop-color="#6E6960"/>
+        </linearGradient>
+      </defs>
+      <rect width="1200" height="800" fill="url(#s4bg)"/>
+      <path d="M0,120 L300,88 L640,118 L980,86 L1200,112 L1200,170 L0,170 Z" fill="#B08258" opacity=".4"/>
+      <rect y="150" width="1200" height="650" fill="#D2B888"/>
+      <path d="M0,150 L1200,150 L1200,158 L0,158 Z" fill="#F2E4C2" opacity=".7"/>
+      <g transform="rotate(-2 600 430)">
+        <rect x="140" y="216" width="920" height="250" rx="14" fill="#8A6A42"/>
+        <rect x="158" y="232" width="884" height="218" rx="8" fill="#5C4630"/>
+        <rect x="120" y="452" width="940" height="26" rx="8" fill="#4A3826" opacity=".5"/>
+        <g>
+          <rect x="172" y="244" width="856" height="44" rx="22" fill="url(#s4core)"/>
+          <rect x="172" y="298" width="856" height="44" rx="22" fill="url(#s4core)"/>
+          <rect x="172" y="352" width="856" height="44" rx="22" fill="url(#s4core)"/>
+          <rect x="172" y="406" width="856" height="38" rx="19" fill="url(#s4core)"/>
+        </g>
+        <g stroke="#54504A" stroke-width="2" opacity=".6">
+          <path d="M340,244 v44 M520,244 v44 M760,244 v44 M300,298 v44 M600,298 v44 M880,298 v44 M420,352 v44 M700,352 v44 M960,352 v44 M360,406 v38 M640,406 v38"/>
+        </g>
+        <g fill="#F2EFE6">
+          <rect x="392" y="248" width="22" height="36" rx="4" transform="rotate(14 400 266)"/>
+          <rect x="642" y="250" width="16" height="34" rx="4" transform="rotate(-12 650 266)"/>
+          <rect x="470" y="304" width="20" height="34" rx="4" transform="rotate(10 480 320)"/>
+          <rect x="820" y="302" width="24" height="36" rx="4" transform="rotate(-16 830 320)"/>
+          <rect x="250" y="356" width="18" height="36" rx="4" transform="rotate(12 258 374)"/>
+          <rect x="905" y="358" width="20" height="34" rx="4" transform="rotate(-10 914 374)"/>
+          <rect x="560" y="410" width="18" height="30" rx="4" transform="rotate(15 568 424)"/>
+        </g>
+        <g fill="#C77A2E">
+          <rect x="486" y="246" width="18" height="40" rx="3"/>
+          <rect x="716" y="300" width="18" height="40" rx="3"/>
+          <rect x="596" y="354" width="18" height="40" rx="3"/>
+        </g>
+      </g>
+      <path d="M120,486 L1080,468 L1112,520 L150,540 Z" fill="#3A2E20" opacity=".3"/>
+      <g transform="rotate(3 900 620)">
+        <rect x="770" y="588" width="270" height="120" rx="10" fill="#8A6A42"/>
+        <rect x="784" y="600" width="242" height="96" rx="6" fill="#5C4630"/>
+        <rect x="792" y="608" width="226" height="34" rx="17" fill="url(#s4core)"/>
+        <rect x="792" y="650" width="226" height="34" rx="17" fill="url(#s4core)"/>
+        <rect x="878" y="612" width="18" height="28" rx="4" fill="#F2EFE6" transform="rotate(12 886 626)"/>
+      </g>
+      <rect width="1200" height="800" fill="#5C4020" opacity=".05"/>
+    </svg>
+    <span class="slot">Concept illustration — replaced by site photography</span>
+  </div>
+        <p class="cap">Drill core from the vein system — quartz through basement rock</p>
+      </div>
+      <div>
+        <div class="ph dusk" data-slot="5">
+    <img class="realph" loading="lazy" src="https://d8j0ntlcm91z4.cloudfront.net/user_3GPt5hWCzN7NGc061uSMrjL0r7q/hf_20260827_105501_7fbb8c34-9fd8-44b7-93bd-e93bcdab25f9.png" alt="The processing plant lit up at dusk" onerror="this.remove()">
+    <svg class="scene" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+      <defs>
+        <linearGradient id="s5sky" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#3E4E6A"/><stop offset=".55" stop-color="#6E5E5A"/><stop offset=".82" stop-color="#B0764A"/><stop offset="1" stop-color="#C98A4E"/>
+        </linearGradient>
+        <radialGradient id="s5lamp" cx=".5" cy=".5" r=".5">
+          <stop offset="0" stop-color="#FFE2A0" stop-opacity=".95"/><stop offset=".4" stop-color="#FFB347" stop-opacity=".4"/><stop offset="1" stop-color="#FFB347" stop-opacity="0"/>
+        </radialGradient>
+      </defs>
+      <rect width="1600" height="620" fill="url(#s5sky)"/>
+      <g fill="#F2EFE6" opacity=".7">
+        <circle cx="220" cy="90" r="2"/><circle cx="480" cy="60" r="1.6"/><circle cx="900" cy="80" r="2"/><circle cx="1300" cy="55" r="1.8"/><circle cx="1480" cy="120" r="1.5"/>
+      </g>
+      <path d="M0,560 L360,520 L760,556 L1160,522 L1600,558 L1600,640 L0,640 Z" fill="#2E2820"/>
+      <rect y="600" width="1600" height="300" fill="#241C12"/>
+      <g fill="#1C1712">
+        <rect x="180" y="470" width="200" height="140"/>
+        <path d="M200,470 L360,470 L340,420 L220,420 Z"/>
+        <path d="M370,540 L820,330 L836,344 L386,556 Z"/>
+        <rect x="800" y="300" width="120" height="60"/>
+        <rect x="820" y="360" width="180" height="110" rx="10"/>
+        <ellipse cx="910" cy="360" rx="90" ry="18"/>
+        <rect x="1060" y="330" width="64" height="280" rx="10"/>
+        <rect x="1150" y="356" width="64" height="254" rx="10"/>
+        <rect x="1240" y="380" width="64" height="230" rx="10"/>
+        <rect x="1030" y="600" width="300" height="14"/>
+        <rect x="440" y="520" width="14" height="92"/>
+        <rect x="640" y="430" width="12" height="182"/>
+      </g>
+      <g>
+        <circle cx="292" cy="500" r="60" fill="url(#s5lamp)"/><circle cx="292" cy="500" r="5" fill="#FFF3CE"/>
+        <circle cx="852" cy="392" r="70" fill="url(#s5lamp)"/><circle cx="852" cy="392" r="5.5" fill="#FFF3CE"/>
+        <circle cx="1092" cy="352" r="52" fill="url(#s5lamp)"/><circle cx="1092" cy="352" r="4.5" fill="#FFF3CE"/>
+        <circle cx="700" cy="470" r="44" fill="url(#s5lamp)"/><circle cx="700" cy="470" r="4" fill="#FFF3CE"/>
+      </g>
+      <path d="M252,520 L332,520 L392,640 L192,640 Z" fill="#FFCE7A" opacity=".1"/>
+      <path d="M812,412 L892,412 L952,640 L752,640 Z" fill="#FFCE7A" opacity=".08"/>
+      <ellipse cx="300" cy="646" rx="180" ry="22" fill="#FFB347" opacity=".12"/>
+      <ellipse cx="860" cy="652" rx="220" ry="24" fill="#FFB347" opacity=".1"/>
+      <rect width="1600" height="900" fill="#0E0C14" opacity=".12"/>
+    </svg>
+    <span class="slot">Concept illustration — replaced by site photography</span>
+  </div>
+        <p class="cap">Crushing, milling and recovery — the plant at shift change</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= REPORTS ================= -->
+<section id="reports">
+  <div class="wrap">
+    <p class="kick reveal">Reports</p>
+    <h2 class="reveal">The paper trail.</h2>
+    <p class="lede reveal">One report a month, on the 5th, every month — production, costs, custody and community fund. A missed report would itself be the news.</p>
+    <div class="replist reveal" id="replist"></div>
+
+    <div class="annex">
+      <a class="ax reveal" href="oscar-mining-so.html">
+        <p class="kick">Interactive annex</p>
+        <h3>The resource model</h3>
+        <p>Explore the ore body block-by-block and drill hole OMS-001 yourself — an interactive companion to the technical reports.</p>
+        <span class="go">Open the model →</span>
+      </a>
+      <a class="ax reveal" href="oscar-mining-so-vault-v2.html">
+        <p class="kick">Interactive annex</p>
+        <h3>The vault</h3>
+        <p>Every month's production as the physical bars it became, with a live gold-price sensitivity console.</p>
+        <span class="go">Open the vault →</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FOOTER ================= -->
+<footer id="contact">
+  <div class="foot">
+    <p class="kick" style="color:#F3B24A">Investor contact</p>
+    <h2>Talk to the mine.</h2>
+    <div class="grid">
+      <div>
+        <p style="font-family:var(--mono);font-size:15px"><a href="mailto:invest@oscarminingso.com">invest@oscarminingso.com</a></p>
+        <p class="note" style="margin-top:10px">Oscar Mining SO · Sanaag Region · Republic of Somaliland</p>
+      </div>
+      <p class="note">© 2026 Oscar Mining SO — Reclaim your future with us. Concept preview: production figures, pour records and imagery placements are illustrative samples until verified mine data and site photography are loaded. Nothing on this page is investment advice.</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+"use strict";
+const REDUCED=matchMedia("(prefers-reduced-motion: reduce)").matches;
+const DPR=Math.min(window.devicePixelRatio||1,2);
+const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+const ease=t=>t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;
+
+const rio=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add("in");rio.unobserve(e.target);}}),{threshold:.12});
+document.querySelectorAll(".reveal").forEach(el=>rio.observe(el));
+
+/* data */
+const MONTHS=["Jan","Feb","Mar","Apr","May","Jun","Jul"];
+const OZ=[2140,2380,2610,2455,2790,2940,3125];
+const GRADE=[2.6,2.8,3.1,2.7,3.0,3.2,3.4];
+const MILLED=[31200,32800,33500,32100,34600,35400,36900];
+const REC=[88.9,89.4,90.2,89.1,90.6,91.0,91.4];
+const YTD=OZ.reduce((a,b)=>a+b,0), AISC=1485, FUND_OZ=Math.round(YTD*.025);
+
+/* tables */
+(function(){
+  const pours=[
+    ["POUR-2026-031","17 Jul 26","13.91 kg","399","89.2%","Refined"],
+    ["POUR-2026-030","09 Jul 26","13.74 kg","392","88.7%","Refined"],
+    ["POUR-2026-029","01 Jul 26","14.02 kg","404","89.6%","Sold · settled"],
+    ["POUR-2026-028","24 Jun 26","13.60 kg","385","88.1%","Sold · settled"],
+    ["POUR-2026-027","16 Jun 26","13.87 kg","397","89.0%","Sold · settled"]
+  ];
+  document.getElementById("pours").innerHTML=pours.map(p=>
+    `<tr><td>${p[0]}</td><td>${p[1]}</td><td>${p[2]}</td><td>${p[3]}</td><td>${p[4]}</td><td><span class="stpill">${p[5]}</span></td></tr>`).join("");
+  document.getElementById("months").innerHTML=MONTHS.map((m,i)=>
+    `<tr><td>${m} 2026</td><td>${OZ[i].toLocaleString()}</td><td>${GRADE[i].toFixed(1)}</td><td>${MILLED[i].toLocaleString()}</td><td>${REC[i].toFixed(1)}%</td></tr>`).join("");
+  const nx=["Feb","Mar","Apr","May","Jun","Jul","Aug"];
+  document.getElementById("replist").innerHTML=MONTHS.map((m,i)=>
+    `<div class="rep"><b>Monthly report — ${m} 2026</b><span class="mono">Published 5 ${nx[i]} 2026 · <a href="#" onclick="return false" style="color:var(--org2)">PDF</a></span></div>`).join("")+
+    `<div class="rep"><b>Monthly report — Aug 2026</b><span class="mono due">Due 5 Sep 2026</span></div>`;
+})();
+
+/* sensitivity */
+const fmtM=v=>v>=1e6?"$"+(v/1e6).toFixed(1)+"M":"$"+Math.round(v).toLocaleString();
+function setPrice(P){
+  document.getElementById("bigprice").innerHTML="$"+P.toLocaleString()+"<small> per ounce</small>";
+  document.getElementById("o_margin").textContent="$"+(P-AISC).toLocaleString();
+  document.getElementById("o_july").textContent=fmtM(3125*P);
+  document.getElementById("o_ytd").textContent=fmtM(YTD*P);
+  document.getElementById("o_fund").textContent=fmtM(FUND_OZ*P);
+}
+const sl=document.getElementById("pslide");
+sl.addEventListener("input",()=>setPrice(+sl.value));
+setPrice(4800);
+document.getElementById("fundline").textContent=FUND_OZ+" oz so far this year";
+
+/* chart */
+(function(){
+  const cv=document.getElementById("chartOz");if(!cv)return;
+  const ctx=cv.getContext("2d");
+  function size(){cv.width=cv.clientWidth*DPR;cv.height=cv.clientHeight*DPR;ctx.setTransform(DPR,0,0,DPR,0,0);}
+  function draw(p){
+    const W=cv.clientWidth,H=cv.clientHeight,pad={l:46,r:10,t:14,b:30},max=3500;
+    ctx.clearRect(0,0,W,H);
+    ctx.strokeStyle="#EFE9DC";ctx.lineWidth=1;
+    ctx.font="10.5px 'IBM Plex Mono',monospace";ctx.fillStyle="#8A8272";
+    for(let i=0;i<=4;i++){const y=pad.t+(H-pad.t-pad.b)*i/4;
+      ctx.beginPath();ctx.moveTo(pad.l,y);ctx.lineTo(W-pad.r,y);ctx.stroke();
+      const v=max*(4-i)/4;ctx.textAlign="right";ctx.fillText(v?v/1000+"k":"0",pad.l-8,y+3);}
+    const n=OZ.length,cw=(W-pad.l-pad.r)/n,bw=Math.min(46,cw*.5);
+    OZ.forEach((v,i)=>{
+      const h=(H-pad.t-pad.b)*(v/max)*p,x=pad.l+cw*i+(cw-bw)/2,y=H-pad.b-h;
+      ctx.fillStyle=i===n-1?"#E9711C":"#3A342A";
+      const r=4;ctx.beginPath();
+      ctx.moveTo(x,y+h);ctx.lineTo(x,y+r);ctx.quadraticCurveTo(x,y,x+r,y);
+      ctx.lineTo(x+bw-r,y);ctx.quadraticCurveTo(x+bw,y,x+bw,y+r);ctx.lineTo(x+bw,y+h);ctx.closePath();ctx.fill();
+      ctx.fillStyle="#8A8272";ctx.textAlign="center";ctx.fillText(MONTHS[i],x+bw/2,H-pad.b+18);
+      if(p>.95){ctx.fillStyle=i===n-1?"#C75C10":"#5A5343";ctx.fillText(v.toLocaleString(),x+bw/2,y-7);}
+    });
+  }
+  size();addEventListener("resize",()=>{size();draw(1);});
+  new IntersectionObserver((es,io)=>es.forEach(e=>{
+    if(!e.isIntersecting)return;io.unobserve(cv);
+    if(REDUCED){draw(1);return;}
+    const t0=performance.now();
+    (function tick(t){const p=ease(clamp((t-t0)/900,0,1));draw(p);if(p<1)requestAnimationFrame(tick);})(t0);
+  }),{threshold:.35}).observe(cv);
+})();
+})();
+</script>
+</body>
+</html>

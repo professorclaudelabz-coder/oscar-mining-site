@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Invest — Oscar Mining SO</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#FAF7F1;--stone:#F1EBE0;--ink:#221C14;--body:#5A5343;--mute:#8A8272;--org:#E9711C;--org2:#C75C10;--hair:#E6DECF;--dark:#241E15;--amber:#FFC989;--disp:'Archivo',sans-serif;--mono:'IBM Plex Mono',monospace}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--body);font-family:var(--disp);font-size:16px;line-height:1.6}
+.topstrip{background:var(--dark);color:#B8AE9C;font-family:var(--mono);font-size:11px;letter-spacing:.06em;padding:9px 24px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.topstrip b{color:var(--amber);font-weight:500}
+nav{position:sticky;top:0;z-index:50;background:rgba(250,247,241,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--hair);display:flex;align-items:center;justify-content:space-between;padding:14px 24px;gap:14px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none}
+.bn{font-weight:740;font-size:15.5px;letter-spacing:.11em;color:var(--ink)}
+.bs{font-family:var(--mono);font-size:9px;letter-spacing:.14em;color:var(--org)}
+.nl{display:flex;align-items:center;gap:16px}
+.hz{color:var(--body);text-decoration:none;font-size:13.5px}
+.hz:hover{color:var(--ink)}
+.btn{display:inline-block;background:var(--org);color:#fff;text-decoration:none;padding:10px 18px;border-radius:4px;font-weight:640;font-size:13.5px}
+.btn:hover{background:var(--org2)}
+.wrap{max-width:1140px;margin:0 auto;padding:0 24px}
+.kick{font-family:var(--mono);font-size:11px;letter-spacing:.2em;color:var(--org);text-transform:uppercase;margin-bottom:14px}
+h1{font-weight:740;font-size:clamp(34px,5.4vw,58px);line-height:1.04;letter-spacing:-.015em;color:var(--ink)}
+h2{font-weight:720;font-size:clamp(24px,3.4vw,36px);line-height:1.1;letter-spacing:-.01em;color:var(--ink);margin-bottom:10px}
+h3{font-weight:680;font-size:17px;color:var(--ink)}
+.badge{display:inline-block;font-family:var(--mono);font-size:10px;letter-spacing:.1em;color:var(--org2);background:#F7E8D8;border:1px solid #EAD2B8;border-radius:999px;padding:3px 10px;vertical-align:middle}
+.sec{padding:76px 0}
+.sec.tint{background:var(--stone)}
+.grid{display:grid;gap:18px}
+.g2{grid-template-columns:1fr 1fr}
+.g3{grid-template-columns:repeat(3,1fr)}
+.g4{grid-template-columns:repeat(4,1fr)}
+.card{background:#fff;border:1px solid var(--hair);border-radius:8px;padding:24px}
+.card .kick{margin-bottom:8px}
+.card p{font-size:14.5px}
+.mono{font-family:var(--mono)}
+.num{font-family:var(--mono);font-size:30px;color:var(--ink);letter-spacing:-.01em}
+.num small{font-size:12px;color:var(--mute);letter-spacing:.04em}
+.hero{padding:88px 0 66px}
+.hero .lead{max-width:640px;font-size:18px;margin-top:18px}
+.hero .cta{margin-top:28px;display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+.ghost{display:inline-block;border:1px solid var(--ink);color:var(--ink);text-decoration:none;padding:10px 18px;border-radius:4px;font-weight:640;font-size:13.5px}
+.ghost:hover{background:var(--ink);color:#fff}
+.photo{border-radius:8px;overflow:hidden;border:1px solid var(--hair)}
+.photo img{width:100%;height:100%;object-fit:cover;display:block}
+.split{display:grid;grid-template-columns:1.1fr .9fr;gap:36px;align-items:center}
+.stat{border-left:3px solid var(--org);padding:6px 0 6px 16px}
+.stat .lbl{font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;color:var(--mute);text-transform:uppercase;margin-top:4px}
+table{width:100%;border-collapse:collapse;font-size:13.5px;background:#fff;border:1px solid var(--hair);border-radius:8px;overflow:hidden}
+th{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--mute);text-align:left;padding:12px 14px;background:var(--stone);border-bottom:1px solid var(--hair)}
+td{padding:12px 14px;border-bottom:1px solid var(--hair);color:var(--body)}
+td.mono,th.r,td.r{text-align:right}
+td.mono{font-family:var(--mono);color:var(--ink)}
+tr:last-child td{border-bottom:none}
+tr.total td{background:#FBF3E7;color:var(--ink);font-weight:640}
+.timeline{display:grid;grid-template-columns:repeat(6,1fr);gap:14px;margin-top:26px}
+.tl{border-top:3px solid var(--hair);padding-top:12px}
+.tl.on{border-top-color:var(--org)}
+.tl .yr{font-family:var(--mono);font-size:12px;color:var(--org2);letter-spacing:.08em}
+.tl p{font-size:13px;margin-top:6px}
+.check{list-style:none;margin-top:16px}
+.check li{padding:11px 0 11px 34px;position:relative;border-bottom:1px solid var(--hair);font-size:14.5px}
+.check li:last-child{border-bottom:none}
+.check li::before{content:"✓";position:absolute;left:4px;top:10px;color:var(--org);font-weight:700}
+.check .tag{font-family:var(--mono);font-size:10.5px;color:var(--mute);letter-spacing:.06em}
+.phases{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:26px}
+.phase{background:#fff;border:1px solid var(--hair);border-radius:8px;padding:24px;border-top:4px solid var(--org)}
+.phase .ph{font-family:var(--mono);font-size:10.5px;letter-spacing:.16em;color:var(--org2)}
+.phase h3{margin:8px 0 12px}
+.phase ul{list-style:none}
+.phase li{font-size:13.5px;padding:6px 0 6px 16px;position:relative}
+.phase li::before{content:"";position:absolute;left:0;top:13px;width:6px;height:6px;border-radius:50%;background:var(--org)}
+.darksec{background:var(--dark);color:#CFC7B6}
+.darksec h2{color:#F4EFE5}
+.darksec .kick{color:var(--amber)}
+.terms{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:28px}
+.term{border:1px solid #3A3226;border-radius:8px;padding:26px;background:#1D1811}
+.term .n{font-family:var(--mono);font-size:11px;color:var(--amber);letter-spacing:.16em}
+.term .big{font-family:var(--mono);font-size:30px;color:#F4EFE5;margin:10px 0 8px}
+.term p{font-size:13.5px}
+.legal{font-family:var(--mono);font-size:11px;line-height:1.7;color:#8A8272;border-top:1px solid #3A3226;margin-top:34px;padding-top:20px}
+.mkt{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:26px}
+footer{background:var(--dark);color:#B8AE9C;padding:44px 24px;font-size:13.5px}
+.fwrap{max-width:1140px;margin:0 auto;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
+footer a{color:var(--amber);text-decoration:none}
+footer a:hover{text-decoration:underline}
+@media(max-width:900px){.g4{grid-template-columns:1fr 1fr}.split{grid-template-columns:1fr}.timeline{grid-template-columns:repeat(3,1fr)}.phases,.terms,.mkt{grid-template-columns:1fr}.g3{grid-template-columns:1fr}}
+@media(max-width:860px){.nl a.hz{display:none}}
+@media(max-width:560px){.g2,.g4{grid-template-columns:1fr}.timeline{grid-template-columns:1fr 1fr}.sec{padding:56px 0}table{font-size:12px}th,td{padding:9px 8px}.bs{display:none}}
+</style>
+</head>
+<body>
+
+<div class="topstrip"><span>Sanaag Region · Republic of Somaliland</span><span>For qualified investors — <b>indicative materials</b></span></div>
+
+<nav>
+  <a class="brand" href="index.html">
+    <svg width="38" height="34" viewBox="0 0 38 34" fill="none"><path d="M2 32L13 8l7 15 4-7 12 16H2z" fill="#221C14"/><path d="M2 32L13 8l5.5 11.5L13 32H2z" fill="#E9711C"/></svg>
+    <span><span class="bn">OSCAR MINING SO</span><br><span class="bs">RECLAIM YOUR FUTURE WITH US</span></span>
+  </a>
+  <div class="nl">
+    <a class="hz" href="index.html">Overview</a>
+    <a class="hz" href="oscar-mining-so.html">The Mine</a>
+    <a class="hz" href="oscar-mining-so-vault-v2.html">The Gold Room</a>
+    <a class="btn" href="#terms">Investment terms</a>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap split">
+    <div>
+      <p class="kick">Investment opportunity</p>
+      <h1>Own a share of producing gold.</h1>
+      <p class="lead">Oscar Mining SO is raising expansion capital against an <strong>operating</strong> open-pit vein and alluvial gold operation — not a promise on paper. Poured bars, monthly reporting, and a registry you can inspect.</p>
+      <p style="margin-top:14px"><span class="badge">Illustrative figures — final numbers to be confirmed in formal documentation</span></p>
+      <div class="cta">
+        <a class="btn" href="#summary">Read the summary</a>
+        <a class="ghost" href="index.html#reports">Monthly reports</a>
+      </div>
+    </div>
+    <div class="photo"><img src="https://d8j0ntlcm91z4.cloudfront.net/user_3GPt5hWCzN7NGc061uSMrjL0r7q/hf_20260827_105500_80823f1a-2ecb-4967-b5cd-f9c81409294e.png" alt="Molten gold pour at the Oscar Mining SO gold room" loading="lazy"></div>
+  </div>
+</header>
+
+<section class="sec tint" id="summary">
+  <div class="wrap">
+    <p class="kick">Executive summary</p>
+    <h2>The opportunity at a glance <span class="badge">Sample data</span></h2>
+    <div class="grid g4" style="margin-top:26px">
+      <div class="card"><p class="kick">Capital raise</p><p class="num">USD 8–12m<small>*</small></p><p>Equity participation through a dedicated SPV, funding plant expansion and the next drilling campaign.</p></div>
+      <div class="card"><p class="kick">The resource</p><p class="num">8 m @ 5.2 g/t<small>*</small></p><p>Best intercept from hole OMS-001. Oxide, transition and fresh zones defined to 60 m+ across the vein corridor.</p></div>
+      <div class="card"><p class="kick">Location</p><p class="num">Sanaag</p><p>Republic of Somaliland. Open-pit vein and alluvial workings with established site access and camp.</p></div>
+      <div class="card"><p class="kick">Exit &amp; returns</p><p class="num">Output + equity</p><p>Proportional share of production, with equity realization on project maturity or asset sale.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap split">
+    <div>
+      <p class="kick">Why now</p>
+      <h2>A mine that already pours.</h2>
+      <p>Most gold raises fund a hope. This one scales a habit: ore is milled, bars are poured and stamped, and every month a report goes out on schedule. Expansion capital buys more of something that already works.</p>
+      <div class="grid g2" style="margin-top:26px">
+        <div class="stat"><div class="num">18,440 oz<small>*</small></div><div class="lbl">Gold poured · YTD 2026</div></div>
+        <div class="stat"><div class="num">236,500 t<small>*</small></div><div class="lbl">Ore milled · YTD 2026</div></div>
+        <div class="stat"><div class="num">91.4%<small>*</small></div><div class="lbl">Recovery · July</div></div>
+        <div class="stat"><div class="num">$3,315/oz<small>*</small></div><div class="lbl">Margin at $4,800 spot</div></div>
+      </div>
+    </div>
+    <div class="photo"><img src="https://d8j0ntlcm91z4.cloudfront.net/user_3GPt5hWCzN7NGc061uSMrjL0r7q/hf_20260827_105501_14b432d8-78b0-440c-b3f5-151c68616569.png" alt="Stamped gold bars stacked in the Oscar Mining SO gold room" loading="lazy"></div>
+  </div>
+</section>
+
+<section class="sec tint">
+  <div class="wrap">
+    <p class="kick">The journey</p>
+    <h2>Where we are on the road. <span class="badge">Dates indicative</span></h2>
+    <div class="timeline">
+      <div class="tl on"><div class="yr">2021*</div><p>Licence area secured; surface sampling across the Sanaag vein corridor.</p></div>
+      <div class="tl on"><div class="yr">2022*</div><p>Alluvial workings established; first camp and site access built.</p></div>
+      <div class="tl on"><div class="yr">2023*</div><p>Open-pit development begins on the primary vein.</p></div>
+      <div class="tl on"><div class="yr">2024*</div><p>Processing plant commissioned; first doré poured on site.</p></div>
+      <div class="tl on"><div class="yr">2025*</div><p>Monthly reporting regime adopted; pour registry opened.</p></div>
+      <div class="tl"><div class="yr">2026–27*</div><p>Expansion program: plant capacity, drilling campaign, second pit.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap split">
+    <div>
+      <p class="kick">Licensing &amp; legal framework</p>
+      <h2>Papers before shovels.</h2>
+      <p>The operating and expansion permissions investors will verify in the data room. Certificate numbers are provided to qualified parties under NDA.</p>
+      <ul class="check">
+        <li><strong>Exploration Licence</strong> — Ministry of Energy &amp; Minerals, Republic of Somaliland <span class="tag">[No. — data room]</span></li>
+        <li><strong>Mining Licence</strong> — primary vein &amp; alluvial workings <span class="tag">[No. — data room]</span></li>
+        <li><strong>Environmental approval</strong> — impact assessment and rehabilitation plan lodged <span class="tag">[Ref. — data room]</span></li>
+        <li><strong>Community agreement</strong> — 2.5% of production value to the community fund*</li>
+        <li><strong>Assay &amp; export compliance</strong> — independent laboratory certification on every pour</li>
+      </ul>
+    </div>
+    <div class="photo"><img src="https://d8j0ntlcm91z4.cloudfront.net/user_3GPt5hWCzN7NGc061uSMrjL0r7q/hf_20260827_105501_2db7a929-1f9d-48dc-bef8-2c033f3322f6.png" alt="NQ drill core trays from the Oscar Mining SO exploration program" loading="lazy"></div>
+  </div>
+</section>
+
+<section class="sec tint">
+  <div class="wrap">
+    <p class="kick">Exploration &amp; resource</p>
+    <h2>Geostatistical summary. <span class="badge">Sample data — resource statement pending</span></h2>
+    <p style="max-width:680px">Drill program to date: 18 holes, NQ core, 96% average recovery, assayed by an independent laboratory using fire assay methods. Figures below illustrate the reporting format; the certified resource statement will replace them.</p>
+    <div style="overflow-x:auto;margin-top:24px">
+      <table>
+        <tr><th>Target zone</th><th class="r">Area (m²)</th><th class="r">Avg depth (m)</th><th class="r">Volume (m³)</th><th class="r">Density (t/m³)</th><th class="r">Tonnes</th><th class="r">Grade g/t Au</th><th class="r">Contained Au (g)</th></tr>
+        <tr><td>Ridge Vein North*</td><td class="mono r">12,400</td><td class="mono r">24</td><td class="mono r">297,600</td><td class="mono r">2.65</td><td class="mono r">788,640</td><td class="mono r">4.1</td><td class="mono r">3,233,424</td></tr>
+        <tr><td>Ridge Vein South*</td><td class="mono r">9,850</td><td class="mono r">24</td><td class="mono r">236,400</td><td class="mono r">2.65</td><td class="mono r">626,460</td><td class="mono r">3.8</td><td class="mono r">2,380,548</td></tr>
+        <tr><td>Alluvial Terrace 1*</td><td class="mono r">18,200</td><td class="mono r">6</td><td class="mono r">109,200</td><td class="mono r">1.90</td><td class="mono r">207,480</td><td class="mono r">1.6</td><td class="mono r">331,968</td></tr>
+        <tr><td>Alluvial Terrace 2*</td><td class="mono r">14,600</td><td class="mono r">6</td><td class="mono r">87,600</td><td class="mono r">1.90</td><td class="mono r">166,440</td><td class="mono r">1.4</td><td class="mono r">233,016</td></tr>
+        <tr class="total"><td colspan="7">TOTAL INFERRED / INDICATED GOLD MINERAL RESOURCE (g)*</td><td class="mono r">6,178,956</td></tr>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <p class="kick">Planned phases</p>
+    <h2>Three stages from here to full capacity.</h2>
+    <div class="phases">
+      <div class="phase"><div class="ph">PHASE 1</div><h3>Expansion &amp; infrastructure</h3><ul>
+        <li>Plant capacity upgrade and second ball mill.</li>
+        <li>Water handling, power and camp expansion.</li>
+        <li>Mobilization of additional equipment and crews.</li>
+        <li>Baseline environmental monitoring extended.</li></ul></div>
+      <div class="phase"><div class="ph">PHASE 2</div><h3>Scaled production</h3><ul>
+        <li>Second pit opened on the southern vein.</li>
+        <li>Throughput ramp with machinery calibration.</li>
+        <li>Metallurgical testing and yield assessment.</li>
+        <li>Validation of parameters for full scale-up.</li></ul></div>
+      <div class="phase"><div class="ph">PHASE 3</div><h3>Full capacity</h3><ul>
+        <li>Steady-state extraction at target throughput.</li>
+        <li>Continuous reconciliation of production data.</li>
+        <li>Full regulatory and environmental compliance.</li>
+        <li>Quarterly investor distributions from output.*</li></ul></div>
+    </div>
+  </div>
+</section>
+
+<section class="sec tint">
+  <div class="wrap">
+    <p class="kick">Mining packages</p>
+    <h2>Expansion scenarios. <span class="badge">Sample data</span></h2>
+    <p style="max-width:680px">Cost packages localized to site conditions; processing plant size includes scaling for plant, infrastructure and water handling, excluding mine and dump.</p>
+    <div style="overflow-x:auto;margin-top:24px">
+      <table>
+        <tr><th></th><th class="r">Scenario A*</th><th class="r">Scenario B*</th><th class="r">Scenario C*</th></tr>
+        <tr><td>Doré output p.a.</td><td class="mono r">400 kg</td><td class="mono r">900 kg</td><td class="mono r">1,400 kg</td></tr>
+        <tr><td>Ore input from mining (t/hr)</td><td class="mono r">50</td><td class="mono r">110</td><td class="mono r">175</td></tr>
+        <tr><td>Revenue (mUSD)</td><td class="mono r">55</td><td class="mono r">125</td><td class="mono r">195</td></tr>
+        <tr><td>Capital expenditure (mUSD)</td><td class="mono r">20–40</td><td class="mono r">50–85</td><td class="mono r">75–110</td></tr>
+        <tr><td>Operational expenditure (mUSD)</td><td class="mono r">4–6</td><td class="mono r">10–15</td><td class="mono r">16–20</td></tr>
+        <tr><td>Staff levels</td><td class="mono r">60–70</td><td class="mono r">95–120</td><td class="mono r">130–155</td></tr>
+        <tr><td>EBITDA</td><td class="mono r">60–70%</td><td class="mono r">65–76%</td><td class="mono r">&gt;80%</td></tr>
+        <tr><td>Processing plant size (ha)</td><td class="mono r">10</td><td class="mono r">22</td><td class="mono r">28</td></tr>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <p class="kick">Market context</p>
+    <h2>Gold's decade, still running. <span class="badge">Update quarterly</span></h2>
+    <div class="mkt">
+      <div class="card"><p class="num">$4,800/oz<small>*</small></p><p>Spot price used across this site's illustrations — multiple record highs set through 2025–26.</p></div>
+      <div class="card"><p class="num">Record<small> demand</small></p><p>Quarterly gold demand at decade highs as investors seek safety amid global uncertainty.</p></div>
+      <div class="card"><p class="num">Central banks</p><p>Multi-year official-sector accumulation continues, underpinning structural demand.</p></div>
+      <div class="card"><p class="num">Store of value</p><p>Geopolitical tension, tariff risk and currency weakness reinforce gold's defensive role.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="sec darksec" id="terms">
+  <div class="wrap">
+    <p class="kick">Investment terms</p>
+    <h2>A fair split, written down. <span class="badge" style="background:#3A2E1E;border-color:#57430F;color:var(--amber)">Indicative — not an offer</span></h2>
+    <div class="terms">
+      <div class="term"><div class="n">01 · PRODUCTION SHARE</div><div class="big">10–12%*</div><p>Of all net gold production, distributed to investors in proportion to SPV participation.</p></div>
+      <div class="term"><div class="n">02 · INDICATIVE RETURN</div><div class="big">25–30% p.a.*</div><p>Based on current gold market conditions and a reference USD 5m participation. Not guaranteed.</p></div>
+      <div class="term"><div class="n">03 · EQUITY SWAP</div><div class="big">After 2 yrs*</div><p>Participation eligible for conversion to project equity at the investor's discretion.</p></div>
+    </div>
+    <p class="legal">* All starred figures on this page are illustrative placeholders pending final documentation. This page is provided for information only and does not constitute an offer, solicitation or recommendation to buy securities in any jurisdiction. Final terms, certified resource statements and licence particulars are provided to qualified investors through the data room and formal subscription documents. Past or illustrated performance is not a guarantee of future results.</p>
+    <div class="cta" style="margin-top:30px;display:flex;gap:12px;flex-wrap:wrap">
+      <a class="btn" href="index.html#contact">Request the data room</a>
+      <a class="ghost" style="border-color:var(--amber);color:var(--amber)" href="oscar-mining-so-vault-v2.html">See the Gold Room</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="fwrap">
+    <span>© 2026 Oscar Mining SO · Sanaag Region, Republic of Somaliland</span>
+    <span><a href="index.html">Overview</a> · <a href="oscar-mining-so.html">The Mine</a> · <a href="oscar-mining-so-vault-v2.html">The Gold Room</a> · <a href="oscar-mining-field-updates.html">Field Updates</a></span>
+  </div>
+</footer>
+
+</body>
+</html>
