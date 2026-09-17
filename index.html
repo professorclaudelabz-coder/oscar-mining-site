@@ -79,7 +79,16 @@ nav{position:sticky;top:0;z-index:50;background:rgba(250,247,241,.92);backdrop-f
 .nl a{color:var(--ink);text-decoration:none}
 .nl a:hover{color:var(--org2)}
 .nl .btn{padding:10px 18px;font-size:13.5px}
+.xtab{display:inline-flex;flex-direction:column;align-items:flex-start;gap:2px;padding:8px 16px;border-radius:4px;
+  background:linear-gradient(135deg,#F3B24A,#E9711C);border:1px solid #C75C10;color:#221C14;text-decoration:none;line-height:1.1;
+  box-shadow:0 3px 12px rgba(233,113,28,.45)}
+.xtab .xl{font-weight:740;font-size:13.5px;letter-spacing:.02em;color:#221C14}
+.xtab .xk{font-family:var(--mono);font-size:8.5px;letter-spacing:.16em;color:#5C2E08;font-weight:500}
+.xtab:hover{background:linear-gradient(135deg,#FFC46A,#F07E28);border-color:#A34A0C;transform:translateY(-1px)}
+.xtab:hover .xl{color:#000}
 @media(max-width:860px){.nl a.hz{display:none}}
+@media(max-width:640px){.xtab{padding:6px 11px}.xtab .xk{font-size:7.5px}.nl{gap:10px}.nl .btn{display:none}.bs{display:none}.bn{font-size:13px}}
+@media(max-width:430px){.brand span{display:none}.brand svg{height:30px}}
 
 /* ---------- hero ---------- */
 #hero{position:relative;min-height:92svh;display:flex;align-items:flex-end;padding:0;color:#fff}
@@ -210,12 +219,11 @@ footer{background:var(--dark);color:#D8D0BE;padding:70px clamp(20px,5vw,72px) 46
     <span><span class="bn">OSCAR MINING SO</span><span class="bs">RECLAIM YOUR FUTURE WITH US</span></span>
   </a>
   <div class="nl">
-    <a class="hz" href="#operation">Operation</a>
-    <a class="hz" href="#gold">The gold</a>
     <a class="hz" href="oscar-mining-investors.html">Investors</a>
     <a class="hz" href="#performance">Performance</a>
-    <a class="hz" href="#reclaim">Responsibility</a>
     <a class="hz" href="#reports">Reports</a>
+    <a class="xtab" href="oscar-mining-so.html"><span class="xl">The Mine</span><span class="xk">INTERACTIVE ▸</span></a>
+    <a class="xtab" href="oscar-mining-so-vault-v2.html"><span class="xl">The Gold Room</span><span class="xk">INTERACTIVE ▸</span></a>
     <a class="btn solid" href="#contact">Investor contact</a>
   </div>
 </nav>
