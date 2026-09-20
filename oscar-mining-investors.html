@@ -93,10 +93,19 @@ footer a:hover{text-decoration:underline}
 @media(max-width:860px){.nl a.hz{display:none}}
 @media(max-width:560px){.g2,.g4{grid-template-columns:1fr}.timeline{grid-template-columns:1fr 1fr}.sec{padding:56px 0}table{font-size:12px}th,td{padding:9px 8px}.bs{display:none}}
 </style>
+<style>
+.langsw{display:inline-flex;gap:2px;align-items:center;margin-left:14px}
+.langsw a{color:#FFC989;cursor:pointer;font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.08em;padding:2px 7px;border:1px solid #4a4234;border-radius:999px;text-decoration:none}
+.langsw a:hover{background:#3A2E1E}
+.langsw a.on{background:#E9711C;border-color:#E9711C;color:#fff}
+.goog-te-banner-frame,.skiptranslate iframe{display:none!important}
+body{top:0!important}
+#google_translate_element{display:none}
+</style>
 </head>
 <body>
 
-<div class="topstrip"><span>Sanaag Region · Republic of Somaliland</span><span>For qualified investors — <b>indicative materials</b></span></div>
+<div class="topstrip"><span>Sanaag Region · Republic of Somaliland</span><span>For qualified investors — <b>indicative materials</b></span><span class="langsw" id="langsw"><a data-l="en" onclick="omsLang('en')">EN</a><a data-l="ar" onclick="omsLang('ar')">AR</a><a data-l="so" onclick="omsLang('so')">SO</a></span></div>
 
 <nav>
   <a class="brand" href="index.html">
@@ -290,5 +299,13 @@ footer a:hover{text-decoration:underline}
   </div>
 </footer>
 
+<div id="google_translate_element"></div>
+<script>
+function googleTranslateElementInit(){new google.translate.TranslateElement({pageLanguage:'en',includedLanguages:'ar,so',autoDisplay:false},'google_translate_element');}
+function omsSetCookie(v){var ds=[location.hostname,'.'+location.hostname];document.cookie='googtrans='+v+';path=/';for(var i=0;i<ds.length;i++){document.cookie='googtrans='+v+';path=/;domain='+ds[i];}}
+function omsLang(l){if(l==='en'){omsSetCookie('/en/en');document.cookie='googtrans=;path=/;expires=Thu, 01 Jan 1970 00:00:00 GMT';}else{omsSetCookie('/en/'+l);}location.reload();}
+(function(){var m=(document.cookie.match(/googtrans=\/en\/(\w+)/)||[])[1]||'en';var el=document.getElementById('langsw');if(el){var as=el.getElementsByTagName('a');for(var i=0;i<as.length;i++){if(as[i].getAttribute('data-l')===m){as[i].className='on';}}}})();
+</script>
+<script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 </body>
 </html>

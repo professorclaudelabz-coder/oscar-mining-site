@@ -152,6 +152,15 @@ footer{background:var(--dark);color:#D8D0BE;padding:50px clamp(20px,5vw,72px) 36
 .foot a{color:#F3B24A}
 .foot .note{color:#9C927C;max-width:560px;line-height:1.9;font-size:12px}
 </style>
+<style>
+.langsw{display:inline-flex;gap:2px;align-items:center;margin-left:14px}
+.langsw a{color:#FFC989;cursor:pointer;font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.08em;padding:2px 7px;border:1px solid #4a4234;border-radius:999px;text-decoration:none}
+.langsw a:hover{background:#3A2E1E}
+.langsw a.on{background:#E9711C;border-color:#E9711C;color:#fff}
+.goog-te-banner-frame,.skiptranslate iframe{display:none!important}
+body{top:0!important}
+#google_translate_element{display:none}
+</style>
 </head>
 <body>
 
@@ -481,5 +490,13 @@ new IntersectionObserver(es=>es.forEach(e=>{
 setShot(0);
 })();
 </script>
+<div id="google_translate_element"></div>
+<script>
+function googleTranslateElementInit(){new google.translate.TranslateElement({pageLanguage:'en',includedLanguages:'ar,so',autoDisplay:false},'google_translate_element');}
+function omsSetCookie(v){var ds=[location.hostname,'.'+location.hostname];document.cookie='googtrans='+v+';path=/';for(var i=0;i<ds.length;i++){document.cookie='googtrans='+v+';path=/;domain='+ds[i];}}
+function omsLang(l){if(l==='en'){omsSetCookie('/en/en');document.cookie='googtrans=;path=/;expires=Thu, 01 Jan 1970 00:00:00 GMT';}else{omsSetCookie('/en/'+l);}location.reload();}
+(function(){var m=(document.cookie.match(/googtrans=\/en\/(\w+)/)||[])[1]||'en';var el=document.getElementById('langsw');if(el){var as=el.getElementsByTagName('a');for(var i=0;i<as.length;i++){if(as[i].getAttribute('data-l')===m){as[i].className='on';}}}})();
+</script>
+<script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 </body>
 </html>
